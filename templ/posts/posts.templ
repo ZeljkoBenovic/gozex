@@ -1,0 +1,35 @@
+package posts
+
+import (
+    "path"
+    "io"
+    "context"
+    "time"
+    "github.com/gosimple/slug"
+    "github.com/ZeljkoBenovic/gozex/templ/blog"
+)
+
+templ Body(b blog.Blog) {
+    <div class="container">
+    <h1>Take a read</h1>
+        <div class="links">
+        for _, p := range b.Posts {
+            <a href={ templ.SafeURL(path.Join(p.Date.Format("2006/01/02"), slug.Make(p.Title), "/")) } class="link">{ p.Title }</a>
+        }
+        </div>
+    </div>
+}
+
+templ Post(postContent templ.Component) {
+    <div class="container post-container">
+    @postContent
+    <div class="post-meta">Published on {time.Now().Format("01/06")} </div>
+    </div>
+}
+
+func Unsafe(html string) templ.Component {
+	return templ.ComponentFunc(func(ctx context.Context, w io.Writer) (err error) {
+		_, err = io.WriteString(w, html)
+		return
+	})
+}

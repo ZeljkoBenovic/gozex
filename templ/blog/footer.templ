@@ -1,0 +1,7 @@
+package blog
+
+import "time"
+
+templ footer(name string) {
+    <div class="footer">© <span id="year">{ time.Now().Year() }</span> { name }</div>
+}

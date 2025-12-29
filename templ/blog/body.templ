@@ -1,0 +1,67 @@
+package blog
+
+templ Body(b Blog) {
+<body>
+    <button class="theme-toggle" id="toggleTheme" title="Toggle dark/light mode"
+        aria-label="Toggle dark/light mode">🌓</button>
+
+    <div class="container">
+        <img src={"https://unavatar.io/github/" + b.GitHubName} alt={b.Name + " Avatar"} class="avatar" />
+
+        <h1>{b.Name}</h1>
+
+        <p class="bio">
+        {{ roles := make([]string,0)
+            for _, role := range b.Roles {
+                roles = append(roles, role)
+                roles = append(roles, " · ")
+            }
+        }}
+        for _, r := range roles[:len(roles)-1] {
+            { r }
+        }
+        </p>
+
+        <div class="links">
+            <a href={b.GitHubURL} class="link" target="_blank">Checkout My GitHub page</a>
+            <a href={b.LinkedInURL} class="link" target="_blank">Checkout My LinkedIN profile</a>
+            <a href="/blog" class="link" target="_blank">Checkout My Blog</a>
+        </div>
+
+        <div class="links">
+            <h2>
+                My OSS Projects
+            </h2>
+
+            if len(b.Projects) != 0 {
+                for _, p := range b.Projects {
+                <a href={p.ProjectURL} class="link" target="_blank">
+                    { p.Name } <br/>
+                    <span class="description">{ p.Description }</span>
+                </a>
+                }
+            } else {
+            <p>No projects, sorry... </p>
+            }
+        </div>
+
+        <div class="links">
+            <h2>
+            Blog Posts
+            </h2>
+
+             if len(b.Posts) != 0 {
+                for _, p := range b.Posts {
+                <a href={ p.URL } class="link" target="_blank">
+                    { p.Title }
+                </a>
+                }
+             } else {
+             <p>No posts, sorry...</p>
+             }
+        </div>
+    @socials(b)
+    @footer(b.Name)
+    </div>
+</body>
+}
