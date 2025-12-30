@@ -24,3 +24,14 @@ projects:
     - name: Kmon
       project_url: https://github.com/ZeljkoBenovic/kmon
       description: Swiss army knife for K8s administrators using k9s TUI.
+job_roles:
+  - title: Senior Platform Engineer @ Linea
+    description: |- 
+      Maintaining EKS/GitHub/ArgoCD/Helm stack. 
+      Building platform tools. 
+      Building Kubernetes operators.
+      Keeping Linea blockchain running.
+  - title: Senior DevOps Engineer @ Route3
+    description: Engineered a GitOps framework leveraging GitHub, GitHub Actions, AWS IAM, AWS OIDC and AWS SSM, all orchestrated seamlessly with Terraform.
+  - title: Senior DevOps Engineer @ Polygon Labs
+    description: Among the top 5 core contributors to the now deprecated Polygon project - Polygon Edge.

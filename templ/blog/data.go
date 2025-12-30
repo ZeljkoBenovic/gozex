@@ -11,6 +11,7 @@ type Blog struct {
 	Roles       []string         `yaml:"roles"`
 	Projects    []GitHubProjects `yaml:"projects"`
 	Posts       []Post           `yaml:"-"`
+	JobRoles    []JobRoles       `yaml:"job_roles"`
 }
 
 type GitHubProjects struct {
@@ -25,4 +26,9 @@ type Post struct {
 	Slug     string
 	FilePath string
 	URL      string
+}
+
+type JobRoles struct {
+	Title       string `yaml:"title"`
+	Description string `yaml:"description"`
 }

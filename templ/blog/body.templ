@@ -2,9 +2,6 @@ package blog
 
 templ Body(b Blog) {
 <body>
-    <button class="theme-toggle" id="toggleTheme" title="Toggle dark/light mode"
-        aria-label="Toggle dark/light mode">🌓</button>
-
     <div class="container">
         <img src={"https://unavatar.io/github/" + b.GitHubName} alt={b.Name + " Avatar"} class="avatar" />
 
@@ -23,14 +20,38 @@ templ Body(b Blog) {
         </p>
 
         <div class="links">
-            <a href={b.GitHubURL} class="link" target="_blank">Checkout My GitHub page</a>
-            <a href={b.LinkedInURL} class="link" target="_blank">Checkout My LinkedIN profile</a>
-            <a href="/blog" class="link">Checkout My Blog</a>
+            <h2>
+                About Me
+            </h2>
+            <a href={b.GitHubURL} class="link" target="_blank">GitHub Page</a>
+            <a href={b.LinkedInURL} class="link" target="_blank"> LinkedIN Profile</a>
+            <a href="/blog" class="link">Blog Page</a>
         </div>
+
+        <div class="">
+                <h2>
+                    GigaChad Path
+                </h2>
+
+                <div class="timeline">
+                    <div class="outer">
+                        for _, j := range b.JobRoles {
+                        <div class="card">
+                            <div class="info">
+                                <h3 class="title">{ j.Title }</h3>
+                                <p>{ j.Description }</p>
+                            </div>
+                        </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+
 
         <div class="links">
             <h2>
-                My OSS Projects
+                Projects
             </h2>
 
             if len(b.Projects) != 0 {
@@ -47,7 +68,7 @@ templ Body(b Blog) {
 
         <div class="links">
             <h2>
-            Blog Posts
+               Useful Stuff
             </h2>
 
              if len(b.Posts) != 0 {
