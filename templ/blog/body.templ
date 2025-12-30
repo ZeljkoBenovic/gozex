@@ -25,7 +25,7 @@ templ Body(b Blog) {
         <div class="links">
             <a href={b.GitHubURL} class="link" target="_blank">Checkout My GitHub page</a>
             <a href={b.LinkedInURL} class="link" target="_blank">Checkout My LinkedIN profile</a>
-            <a href="/blog" class="link" target="_blank">Checkout My Blog</a>
+            <a href="/blog" class="link">Checkout My Blog</a>
         </div>
 
         <div class="links">
@@ -52,7 +52,7 @@ templ Body(b Blog) {
 
              if len(b.Posts) != 0 {
                 for _, p := range b.Posts {
-                <a href={ p.URL } class="link" target="_blank">
+                <a href={ p.URL } class="link">
                     { p.Title }
                 </a>
                 }
