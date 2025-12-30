@@ -9,8 +9,7 @@ jobs:
   deploy:
     runs-on: ubuntu-22.04
     permissions:
-      pages: write
-      id-token: write
+      contents: write
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
     steps:
@@ -36,5 +35,3 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           cname: zeljkobenovic.com
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v4
