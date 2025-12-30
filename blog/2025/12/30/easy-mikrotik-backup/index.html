@@ -1,0 +1,310 @@
+<!doctype html><html lang="en" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Željko Benović</title><style>:root {
+    --bg-light: #ffffff;
+    --text-light: #000000;
+    --card-bg-light: #f4f4f4;
+    --hover-light: #e0e0e0;
+
+    --bg-dark: #0e0e0e;
+    --text-dark: #ffffff;
+    --card-bg-dark: #1a1a1a;
+    --hover-dark: #222;
+
+    --gold: #ffd700;
+    --radius: 12px;
+    --transition: all 0.3s ease;
+}
+
+[data-theme="dark"] {
+    --bg: var(--bg-dark);
+    --text: var(--text-dark);
+    --card-bg: var(--card-bg-dark);
+    --hover: var(--hover-dark);
+}
+
+[data-theme="light"] {
+    --bg: var(--bg-light);
+    --text: var(--text-light);
+    --card-bg: var(--card-bg-light);
+    --hover: var(--hover-light);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+    transition: var(--transition);
+}
+
+.container {
+    max-width: 480px;
+    width: 100%;
+    background-color: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 2rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    transition: var(--transition);
+}
+
+.post-container {
+    max-width: 786px;
+    margin: 0 auto;
+    padding: 2rem;
+    color: #c9d1d9;
+    font-family: 'Inter', -apple-system, sans-serif;
+    line-height: 1.6;
+    text-align: left;
+}
+.post-container h1 { font-size: 2rem; color: #fff; margin-bottom: 0.5rem; text-align: center }
+.post-container h2 { color: #7a6d5d; margin: 1rem; border-bottom: 1px solid #7a6d5d; padding-bottom: 0.5rem; text-align: center }
+.post-container p {
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+.post-container pre {
+    padding-left: 10px;
+    margin: 0;
+    overflow-x: auto;
+    color: #d2a8ff;
+    font-family: 'Fira Code', monospace;
+    text-align: left;
+}
+.post-container code {
+    background: #000000;
+    margin: 1.5rem 0;
+    overflow: hidden;
+    padding: 5px;
+}
+.post-container .language-bash {
+    background: #000000;
+    overflow: hidden;
+    display: block;
+    padding: 5px;
+}
+.post-container .language-yaml {
+    background: #000000;
+    overflow: hidden;
+    display: block;
+    padding: 5px;
+}
+.post-container ul {
+    margin: 1rem;
+    padding-left: 1rem;
+}
+.post-container ol {
+    margin: 1rem;
+    padding-left: 1rem;
+}
+.post-container a {
+    color: #6f8ce3;
+}
+.post-container a:active {
+    color: #a4b6ed;
+}
+.post-container .post-meta {
+    color: #8b949e;
+    font-size: 0.9rem;
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1rem;
+    border: 2px solid var(--gold);
+}
+
+h1 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+}
+
+.bio {
+    font-size: 1rem;
+    color: #888;
+    margin-bottom: 1.5rem;
+}
+
+.links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+}
+
+.link {
+    background-color: var(--hover);
+    border-radius: var(--radius);
+    padding: 0.75rem 1rem;
+    text-decoration: none;
+    color: var(--text);
+    transition: var(--transition);
+    font-weight: 500;
+}
+
+.link:hover {
+    opacity: 0.8;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.social-icons a {
+    color: var(--text);
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+}
+
+.social-icons a:hover {
+    top: 10px;
+}
+
+.social-icons svg {
+    width: 36px;
+    height: 36px;
+    fill: var(--text);
+}
+
+.footer {
+    margin-top: 2rem;
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.credit {
+    margin-top: 0.75rem;
+    font-size: 0.75rem;
+    color: #777;
+}
+
+.credit a {
+    color: var(--text);
+    text-decoration: underline;
+    transition: var(--transition);
+}
+
+.theme-toggle {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: var(--text);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.theme-toggle:hover {
+    opacity: 0.8;
+}
+
+.description {
+    color: #888888;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 12px;
+    line-height: 1.5;
+    text-align: left;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+</style></head><div class="container post-container"><h1>Mikrotik Backups Made Easy</h1>
+<p>If you’ve ever managed a network of Mikrotik routers, you know the drill.
+Whether it’s a sudden hardware failure or a configuration tweak gone wrong, having a recent backup is the difference between a five-minute fix and a five-hour nightmare.</p>
+<p>While RouterOS is powerful, managing backups across dozens or hundreds of devices can be a logistical headache.
+So, how do we cure this headache?</p>
+<p>Enter Gombak (GO Mikrotik BAcKup), a lightweight, open-source tool written in Go, designed specifically to automate and simplify the MikroTik backup process.</p>
+<h2>Why Gombak?</h2>
+<p>Most network admins rely on custom scripts or manual exports. This is totally fine when there is only one, or a few routers to manage,
+but it is definitely not scalable to do <em>en masse</em>.<br>
+Gombak makes this process very easy by providing a unified binary that handles discovery, execution, and retention.
+Since it’s built in Go, it’s fast, cross-platform, and has zero dependencies.</p>
+<h2>Key Features at a Glance</h2>
+<ul>
+<li><em><strong>Three Operational Modes</strong></em>: Flexible enough for one router or an entire ISP infrastructure.</li>
+<li><em><strong>L2TP Discovery</strong></em>: Automatically finds routers connected via L2TP tunnels - perfect for &quot;concentrator&quot; setups.</li>
+<li><em><strong>Retention Management</strong></em>: Automatically cleans up old backups so your storage doesn't bloat.</li>
+<li><em><strong>System Service Integration</strong></em>: You can install it as a background service with a single command.</li>
+<li><em><strong>Config Flexibility</strong></em>: Use CLI flags, Environment Variables, or YAML files.</li>
+</ul>
+<h2>Getting Started</h2>
+<p>Gombak adapts to your network topology through three distinct modes of operation.<br>
+There are 3 modes of operation:</p>
+<ol>
+<li>
+<p><strong>Single Mode</strong>: Need a backup of a single Mikrotik device? You don’t even need a config file. Just run it straight from your terminal:</p>
+<pre><code class="language-bash">gombak --single.host &quot;192.168.88.1&quot; --single.user &quot;admin&quot; --single.pass &quot;password&quot; --backup-dir &quot;./backups&quot;
+</code></pre>
+</li>
+<li>
+<p><strong>Multi Mode</strong>: For a static list of routers, you can define a <code>config.yaml</code>.
+This allows you to specify different credentials or SSH ports for every device in your inventory.
+Your config file would look like this:</p>
+<pre><code class="language-yaml">mode: multi
+backup-dir: &quot;./backups&quot;
+multi-router:
+  - host: &quot;10.0.0.1&quot;
+    username: &quot;admin&quot;
+    password: &quot;password&quot;
+  - host: &quot;10.0.0.2&quot;
+    username: &quot;admin&quot;
+    password: &quot;password&quot;
+</code></pre>
+</li>
+<li>
+<p><strong>The &quot;Smart Discovery&quot; (L2TP Mode)</strong>: This is where Gombak truly shines for ISPs or large MSPs.
+If you have a &quot;concentrator&quot; router where other routers connect via L2TP, Gombak can query the concentrator's API, discover the remote IP addresses of the tunnels, and back them all up automatically.<br>
+All you would need to do is to set up its configuration properly:</p>
+<pre><code class="language-yaml">mode: l2tp
+backup-dir: &quot;./backups&quot;
+discovery:
+  hosts:
+    - &quot;10.0.0.1&quot;
+    - &quot;10.0.0.2&quot;
+  username: &quot;admin&quot;
+  password: &quot;password&quot;
+</code></pre>
+</li>
+</ol>
+<h2>Automation Made Easy</h2>
+<p>Gombak comes with a very neat feature. Service installation.
+It includes built-in commands to install itself as a system service:</p>
+<ul>
+<li>install: <code>gombak install -c /path/to/config.yaml</code></li>
+<li>uninstall: <code>gombak uninstall</code></li>
+</ul>
+<p>Once installed, it will respect your defined backup frequency and backup retention, ensuring you always have a fresh backup without lifting a finger.</p>
+<h2>Future</h2>
+<p>Some features which will be added in the future:</p>
+<ul>
+<li><strong>Prometheus metrics</strong>: to enable observability of the backup process.</li>
+<li><strong>Cloud storage</strong>: native support for saving files to cloud storage like S3 bucket.</li>
+</ul>
+<h2>Conclusion</h2>
+<p>If you are looking for a &quot;set it and forget it&quot; solution for Mikrotik backups, Gombak is a fantastic choice.
+It moves away from the &quot;do-it-your-self-script&quot; of the past and provides a robust, professional CLI tool for modern network administration.</p>
+<h2>Check it out on GitHub</h2>
+<p>Sounds useful? Check it out on <a href="https://github.com/ZeljkoBenovic/gombak">Gombak GitHub Repository</a>.</p>
+<div class="post-meta">Published on 12/25</div></div></html>
