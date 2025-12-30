@@ -1,0 +1,26 @@
+name: Željko Benović
+github_name: zeljkobenovic
+github_url: https://github.com/ZeljkoBenovic
+linked_in_url: https://www.linkedin.com/in/zeljko-benovic
+email: benoviczeljko87@gmail.com
+roles:
+    - Kubernetes
+    - Helm
+    - DevSecOps
+    - GigaChad
+projects:
+    - name: Govein
+      project_url: https://github.com/ZeljkoBenovic/govein
+      description: Complete solution for your Veeam B&R observability.
+    - name: Gombak
+      project_url: https://github.com/ZeljkoBenovic/gombak
+      description: Mikrotik router discovery and backup service.
+    - name: TSBC
+      project_url: https://github.com/ZeljkoBenovic/tsbc
+      description: Teams SBC - connect your PBX with MS Teams.
+    - name: Vmex
+      project_url: https://github.com/ZeljkoBenovic/vmex
+      description: Filter and export your VMWare VMs into an excel report.
+    - name: Kmon
+      project_url: https://github.com/ZeljkoBenovic/kmon
+      description: Swiss army knife for K8s administrators using k9s TUI.

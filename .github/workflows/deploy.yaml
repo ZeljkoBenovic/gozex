@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   deploy:
@@ -14,13 +14,22 @@ jobs:
       group: ${{ github.workflow }}-${{ github.ref }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
-
+      - name: Setup GO
+        uses: actions/setup-go@v6
+        with:
+          go-version: "1.25"
       - name: Generate templ code
         uses: capthiron/templ-generator-action@v1
-
+        with:
+          commit: "false"
+          setup-go: "false"
+      - name: Run Mage
+        uses: magefile/mage-action@v3
+        with:
+          version: latest
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
         with:

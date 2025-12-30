@@ -17,44 +17,21 @@ import (
 	"github.com/yuin/goldmark/parser"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
+	"gopkg.in/yaml.v3"
 )
 
 func main() {
 	data := blog.Blog{
-		Name:        "Željko Benović",
-		GitHubName:  "zeljkobenovic",
-		GitHubURL:   "https://github.com/ZeljkoBenovic",
-		LinkedInURL: "https://www.linkedin.com/in/zeljko-benovic",
-		Email:       "benoviczeljko87@gmail.com",
-		Roles:       []string{"Kubernetes", "Helm", "DevSecOps", "GigaChad"},
-		Projects: []blog.GitHubProjects{
-			{
-				Name:        "Govein",
-				ProjectURL:  "https://github.com/ZeljkoBenovic/govein",
-				Description: "Complete solution for your Veeam B&R observability.",
-			},
-			{
-				Name:        "Gombak",
-				ProjectURL:  "https://github.com/ZeljkoBenovic/gombak",
-				Description: "Mikrotik router discovery and backup service.",
-			},
-			{
-				Name:        "TSBC",
-				ProjectURL:  "https://github.com/ZeljkoBenovic/tsbc",
-				Description: "Teams SBC - connect your PBX with MS Teams.",
-			},
-			{
-				Name:        "Vmex",
-				ProjectURL:  "https://github.com/ZeljkoBenovic/vmex",
-				Description: "Filter and export your VMWare VMs into an excel report.",
-			},
-			{
-				Name:        "Kmon",
-				ProjectURL:  "https://github.com/ZeljkoBenovic/kmon",
-				Description: "Swiss army knife for K8s administrators using k9s TUI.",
-			},
-		},
 		Posts: make([]blog.Post, 0),
+	}
+
+	f, err := os.ReadFile("config.yaml")
+	if err != nil {
+		log.Fatalf("Error reading config.yaml: %v", err)
+	}
+
+	if err = yaml.NewDecoder(bytes.NewBuffer(f)).Decode(&data); err != nil {
+		log.Fatalf("Error parsing config.yaml: %v", err)
 	}
 
 	ctx := context.Background()
