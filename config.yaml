@@ -1,37 +1,127 @@
 name: Željko Benović
+title: Staff Platform Engineer
+bio: "Platform/DevSecOps/SRE engineer with extensive expertise in development, integration, deployments, monitoring, and security. Kubernetes gigachad. Golang wizard. Blockchain connoisseur."
 github_name: zeljkobenovic
 github_url: https://github.com/ZeljkoBenovic
 linked_in_url: https://www.linkedin.com/in/zeljko-benovic
 email: benoviczeljko87@gmail.com
 roles:
-    - Kubernetes
-    - Helm
+    - Staff Platform Engineer
     - DevSecOps
-    - GigaChad
+    - SRE
+skills:
+    - category: DevOps
+      items:
+          - Kubernetes
+          - K8s Operators
+          - Service Mesh
+          - Helm
+          - ArgoCD
+          - Terraform
+          - GitOps
+    - category: Cloud
+      items:
+          - AWS
+          - GCP
+          - HyperV
+          - VMWare
+          - KVM
+    - category: Observability
+      items:
+          - Prometheus
+          - Grafana
+          - Loki
+          - OTEL
+          - Pyroscope
+          - InfluxDB
+          - Telegraf
+    - category: Programming
+      items:
+          - Go
+          - Python
+          - Bash
 projects:
-    - name: Govein
-      project_url: https://github.com/ZeljkoBenovic/govein
-      description: Complete solution for your Veeam B&R observability.
-    - name: Gombak
+    - name: gombak
       project_url: https://github.com/ZeljkoBenovic/gombak
-      description: Mikrotik router discovery and backup service.
-    - name: TSBC
+      description: MikroTik router automated discovery and backup service.
+      stars: 14
+      tags:
+          - Go
+          - MikroTik
+          - SSH
+    - name: tsbc
       project_url: https://github.com/ZeljkoBenovic/tsbc
-      description: Teams SBC - connect your PBX with MS Teams.
-    - name: Vmex
+      description: Teams Direct Routing SBC — connect your PBX with MS Teams.
+      stars: 13
+      tags:
+          - Go
+          - Kamailio
+          - Docker
+    - name: aws-commander
+      project_url: https://github.com/ZeljkoBenovic/aws-commander
+      description: Run scripts on EC2 instances without direct SSH access via AWS SSM.
+      stars: 5
+      tags:
+          - Go
+          - AWS
+          - SSM
+    - name: govein
+      project_url: https://github.com/ZeljkoBenovic/govein
+      description: Veeam B&R metrics exporter for InfluxDB and Grafana observability.
+      stars: 4
+      tags:
+          - Go
+          - Docker
+          - Kubernetes
+    - name: tpser
+      project_url: https://github.com/ZeljkoBenovic/tpser
+      description: Block utilization and TPS benchmarking tool for any EVM-compatible chain.
+      stars: 1
+      tags:
+          - Go
+          - Ethereum
+          - Blockchain
+    - name: vmex
       project_url: https://github.com/ZeljkoBenovic/vmex
-      description: Filter and export your VMWare VMs into an excel report.
-    - name: Kmon
+      description: Filter and export VMware vCenter VMs to an Excel report.
+      stars: 1
+      tags:
+          - Go
+          - VMware
+    - name: kmon
       project_url: https://github.com/ZeljkoBenovic/kmon
-      description: Swiss army knife for K8s administrators using k9s TUI.
+      description: K8s admin swiss knife — VolumeSnapshot from PVC, k9s plugin (wip).
+      stars: 0
+      tags:
+          - Go
+          - Kubernetes
 job_roles:
-  - title: Senior Platform Engineer @ Linea
-    description: |- 
-      Maintaining EKS/GitHub/ArgoCD/Helm stack. 
-      Building platform tools. 
-      Building Kubernetes operators.
-      Keeping Linea blockchain running.
-  - title: Senior DevOps Engineer @ Route3
-    description: Engineered a GitOps framework leveraging GitHub, GitHub Actions, AWS IAM, AWS OIDC and AWS SSM, all orchestrated seamlessly with Terraform.
+  - title: Staff Platform Engineer @ Consensys - Linea
+    date: "Apr 2024 – Current"
+    description: |-
+      Built Linea Edge EKS clusters in different AZs hosting P2P EL/CL nodes, defining a clear separation between core infrastructure and public-facing P2P nodes.
+      Built GitOps stack with ArgoCD, GitHub Actions and AWS IAM using "Apps of Apps" pattern for seamless K8s deployments.
+      Implemented rigorous RBAC policies for Kubernetes and ArgoCD relying on OKTA and AWS IAM.
+      Implemented Web3Signer REST service in a restricted AWS account with HSM for signing core transactions.
+      Contributed to Infura's Kubernetes Operator enabling seamless blockchain node scaling, syncing, backup and peer discovery.
+      Implemented Karpenter across all EKS clusters replacing AWS ASG; reduced overall infrastructure costs by 60% via Spot instances.
+      K8s security hardening: NetworkPolicies, Istio service mesh, Velero, VolumeSnapshot CronJobs, External Secrets Operator.
+      Created a pod autodiscovery service multiplexing CL engine API requests to all pods enabling out-of-sync pods to resume syncing.
+  - title: Head of DevOps @ Route3
+    date: "May 2023 – Jan 2024"
+    description: |-
+      Engineered a GitOps framework leveraging GitHub Actions, AWS IAM, AWS OIDC and AWS SSM, orchestrated with Terraform.
+      Designed and launched a complete observability platform: Grafana, Prometheus, Telegraf, InfluxDB, Loki and Grafana Pyroscope.
+      Developed backend Go codebase integrating aws-sdk for AWS interaction and go-ansible to provision services on EC2 instances.
   - title: Senior DevOps Engineer @ Polygon Labs
-    description: Among the top 5 core contributors to the now deprecated Polygon project - Polygon Edge.
+    date: "Sep 2021 – May 2023"
+    description: |-
+      Among the top 5 core contributors to the now deprecated Polygon Edge project.
+      Architected a comprehensive network stress testing and TPS benchmark framework with real-time Slack notifications per deployment.
+      Led the team in developing Terraform code for the Polygon Edge AWS Quick Start project.
+      Led the team in creating Helm Charts for Polygon Edge.
+  - title: Senior Network Engineer @ IPHouse d.o.o.
+    date: "Apr 2017 – Aug 2021"
+    description: |-
+      Designed and implemented core services on an on-prem VMWare cluster including routing, firewall, security, VPN and Veeam D&R backup.
+      Deployed IPAM, IDP and IDS solutions; managed a team of 5 engineers.

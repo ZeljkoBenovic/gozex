@@ -1,88 +1,127 @@
 package blog
 
+import (
+    "strings"
+    "strconv"
+)
+
 templ Body(b Blog) {
 <body>
     <div class="container">
-        <img src={"https://unavatar.io/github/" + b.GitHubName} alt={b.Name + " Avatar"} class="avatar" />
 
-        <h1>{b.Name}</h1>
-
-        <p class="bio">
-        {{ roles := make([]string,0)
-            for _, role := range b.Roles {
-                roles = append(roles, role)
-                roles = append(roles, " · ")
-            }
-        }}
-        for _, r := range roles[:len(roles)-1] {
-            { r }
-        }
-        </p>
-
-        <div class="links">
-            <h2>
-                About Me
-            </h2>
-            <a href={b.GitHubURL} class="link" target="_blank">GitHub Page</a>
-            <a href={b.LinkedInURL} class="link" target="_blank"> LinkedIN Profile</a>
-            <a href="/blog" class="link">Blog Page</a>
-        </div>
-
-        <div class="">
-                <h2>
-                    GigaChad Path
-                </h2>
-
-                <div class="timeline">
-                    <div class="outer">
-                        for _, j := range b.JobRoles {
-                        <div class="card">
-                            <div class="info">
-                                <h3 class="title">{ j.Title }</h3>
-                                <p>{ j.Description }</p>
-                            </div>
-                        </div>
-                        }
-                    </div>
+        <!-- HERO -->
+        <section class="hero">
+            <div class="hero-avatar">
+                <img src={"https://unavatar.io/github/" + b.GitHubName} alt={b.Name + " Avatar"} class="avatar" />
+            </div>
+            <div class="hero-text">
+                <h1 class="glitch" data-text={b.Name}><span class="prompt">~ $</span> {b.Name}</h1>
+                <p class="hero-title">{ "//" } {b.Title}</p>
+                <p class="bio">{b.Bio}</p>
+                <div class="role-chips">
+                    for _, role := range b.Roles {
+                        <span class="chip">{role}</span>
+                    }
+                </div>
+                <div class="hero-links">
+                    <a href={templ.SafeURL(b.GitHubURL)} class="hero-link" target="_blank">[ github ]</a>
+                    <a href={templ.SafeURL(b.LinkedInURL)} class="hero-link" target="_blank">[ linkedin ]</a>
+                    <a href="/blog" class="hero-link">[ blog ]</a>
+                    <a href={"mailto:" + b.Email} class="hero-link">[ email ]</a>
                 </div>
             </div>
+        </section>
 
+        <div class="divider"></div>
 
+        <!-- SKILLS -->
+        <section class="section">
+            <h2 class="section-header"><span class="prompt">></span> skills</h2>
+            <div class="skills-grid">
+                for _, cat := range b.Skills {
+                    <div class="skill-category">
+                        <div class="skill-cat-label">{ "//" } {cat.Category}</div>
+                        <div class="skill-tags">
+                            for _, item := range cat.Items {
+                                <span class="skill-tag">{item}</span>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </section>
 
-        <div class="links">
-            <h2>
-                Projects
-            </h2>
+        <div class="divider"></div>
 
-            if len(b.Projects) != 0 {
+        <!-- GIGACHAD PATH -->
+        <section class="section">
+            <h2 class="section-header"><span class="prompt">></span> GigaChad_Path</h2>
+            <div class="timeline">
+                <div class="outer">
+                    for _, j := range b.JobRoles {
+                        <div class="card">
+                            <div class="info">
+                                <div class="job-header">
+                                    <h3 class="title">{j.Title}</h3>
+                                    <span class="job-date">{j.Date}</span>
+                                </div>
+                                for _, line := range strings.Split(j.Description, "\n") {
+                                    if strings.TrimSpace(line) != "" {
+                                        <p class="job-bullet"><span class="bullet">$</span> {strings.TrimSpace(line)}</p>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- PROJECTS -->
+        <section class="section">
+            <h2 class="section-header"><span class="prompt">></span> projects</h2>
+            <div class="project-grid">
                 for _, p := range b.Projects {
-                <a href={p.ProjectURL} class="link" target="_blank">
-                    { p.Name } <br/>
-                    <span class="description">{ p.Description }</span>
-                </a>
+                    <a href={templ.SafeURL(p.ProjectURL)} class="project-card" target="_blank">
+                        <div class="project-top">
+                            <span class="project-name">{ p.Name }</span>
+                            if p.Stars > 0 {
+                                <span class="project-stars">★ { strconv.Itoa(p.Stars) }</span>
+                            }
+                        </div>
+                        <p class="project-desc">{ p.Description }</p>
+                        <div class="project-tags">
+                            for _, tag := range p.Tags {
+                                <span class="tag">{ tag }</span>
+                            }
+                        </div>
+                    </a>
                 }
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- BLOG -->
+        <section class="section">
+            <h2 class="section-header"><span class="prompt">></span> useful_stuff</h2>
+            if len(b.Posts) != 0 {
+                <div class="post-list">
+                    for _, p := range b.Posts {
+                        <a href={ templ.SafeURL(p.URL) } class="post-card">
+                            <span class="post-title">{ p.Title }</span>
+                            <span class="post-arrow">→</span>
+                        </a>
+                    }
+                </div>
             } else {
-            <p>No projects, sorry... </p>
+                <p class="empty">{ "//" } no posts yet</p>
             }
-        </div>
+        </section>
 
-        <div class="links">
-            <h2>
-               Useful Stuff
-            </h2>
-
-             if len(b.Posts) != 0 {
-                for _, p := range b.Posts {
-                <a href={ p.URL } class="link">
-                    { p.Title }
-                </a>
-                }
-             } else {
-             <p>No posts, sorry...</p>
-             }
-        </div>
-    @socials(b)
-    @footer(b.Name)
+        @footer(b.Name)
     </div>
 </body>
 }

@@ -10,21 +10,28 @@ import (
 )
 
 templ Body(b blog.Blog) {
-    <div class="container">
-    <h1>Take a read</h1>
-        <div class="links">
+    <body>
+    <div class="container" style="padding: 2rem 1rem;">
+        <h2 class="blog-header"><span style="color: #00ff88; margin-right: 0.4rem;">></span> posts</h2>
+        <div class="blog-list">
         for _, p := range b.Posts {
-            <a href={ templ.SafeURL(path.Join(p.Date.Format("2006/01/02"), slug.Make(p.Title), "/")) } class="link">{ p.Title }</a>
+            <a href={ templ.SafeURL(path.Join(p.Date.Format("2006/01/02"), slug.Make(p.Title), "/")) } class="blog-link">
+                <span>{ p.Title }</span>
+                <span style="color: #00ff88; opacity: 0.6;">→</span>
+            </a>
         }
         </div>
     </div>
+    </body>
 }
 
 templ Post(postContent templ.Component) {
+    <body>
     <div class="container post-container">
     @postContent
-    <div class="post-meta">Published on {time.Now().Format("01/06")} </div>
+    <div class="post-meta">published { time.Now().Format("Jan 2006") }</div>
     </div>
+    </body>
 }
 
 func Unsafe(html string) templ.Component {
