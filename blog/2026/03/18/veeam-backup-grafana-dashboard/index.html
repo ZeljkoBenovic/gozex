@@ -643,4 +643,64 @@ h1.glitch:hover::after {
         transform: none;
     }
 }
-</style></head><body><div class="container" style="padding: 2rem 1rem;"><h2 class="blog-header"><span style="color: #00ff88; margin-right: 0.4rem;">></span> posts</h2><div class="blog-list"><a href="2026/03/18/easy-mikrotik-backup" class="blog-link"><span>Easy Mikrotik Backup</span> <span style="color: #00ff88; opacity: 0.6;">→</span></a><a href="2026/03/18/veeam-backup-grafana-dashboard" class="blog-link"><span>Veeam Backup Grafana Dashboard</span> <span style="color: #00ff88; opacity: 0.6;">→</span></a></div></div></body></html>
+</style></head><body><div class="container post-container"><h1>Monitoring Veeam B&amp;R with Govein</h1>
+<p>In the world of backup administration, &quot;no news is good news&quot; is a dangerous philosophy.
+You don't want to find out your backup jobs have been failing for three days only when you actually need to restore a critical server.</p>
+<p>While Veeam Backup &amp; Replication (VBR) provides email reports, modern IT teams need real-time, centralized observability and alerting.
+This is where <strong>Govein</strong> comes in - pumps your Veeam data directly into InfluxDB for stunning Grafana dashboards.</p>
+<h2>What is Govein?</h2>
+<p>Govein is a Go based evolution of the popular community script most commonly used for Veeam monitoring
+<a href="https://github.com/jorgedlcruz/veeam-backup-and-replication-grafana">https://github.com/jorgedlcruz/veeam-backup-and-replication-grafana</a>.<br>
+It’s designed to be lightweight, container-friendly, and dead-simple to deploy.
+It scrapes the Veeam API and pushes stuff like job statuses, repositories usage percentage, etc. metrics into InfluxDB 2.0+.</p>
+<h2>Why Go-Native?</h2>
+<p>If you've used older shell or PowerShell based exporters, you might have dealt with dependency or deployment issues. <br>
+Govein offers:</p>
+<ul>
+<li><em><strong>Container-First Design</strong></em>: Easy to run in Docker or Kubernetes (Helm charts included!).</li>
+<li><em><strong>Native Speed</strong></em>: An executable, written in Go for minimal resource footprint on your monitoring host.</li>
+<li><em><strong>Secrets Management</strong></em>: Built-in support for environment variables, making it ideal for CI/CD and secure environments.</li>
+<li><em><strong>Run on any host</strong></em>: Various operating systems and CPU architectures are supported.</li>
+</ul>
+<h2>Requirements</h2>
+<p>Before you start, make sure you have:</p>
+<ul>
+<li><code>Veeam Backup &amp; Replication 12+</code>: taking advantage of the latest Rest APIs.</li>
+<li><code>InfluxDB 2.0+</code>: bucket created and ready.</li>
+<li><code>Grafana</code>: to visualize the data.</li>
+</ul>
+<h2>Fast-Track Configuration</h2>
+<p>Govein makes configuration intuitive.
+You can generate a starter template with <code>govein -export</code> or jump straight into a <code>config.yaml</code>:</p>
+<pre><code class="language-yaml">veeam:
+    host: https://your-veeam-server:9419
+    username: &quot;veeam-admin&quot;
+    password: &quot;secure-password&quot;
+    trust_self_signed_cert: true
+influx:
+    host: http://influxdb:8086
+    token: &quot;your-influx-token&quot;
+    org: &quot;your-org&quot;
+    bucket: &quot;veeam-metrics&quot;
+</code></pre>
+<p>Once configured, simply run: <code>govein -config ./config.yaml</code></p>
+<h2>Make Veeam Dashboard Great Again</h2>
+<p>The real payoff happens in Grafana.
+Govein includes sample dashboards in the repository.</p>
+<p>Instead of digging through the Veeam console, your team can see:</p>
+<ul>
+<li><em><strong>Job Success/Failure Ratios</strong></em>: At a glance status of your entire environment.</li>
+<li><em><strong>Data Transfer Trends</strong></em>: Monitor how much data is being backed up daily.</li>
+<li><em><strong>Storage Latency &amp; Performance</strong></em>: Identify bottlenecks before they impact your backup window.</li>
+</ul>
+<h2>Deploying on Kubernetes</h2>
+<p>For those running on the all mighty orchestrator, we've got a neat Helm chart.
+Adding the Helm repo and deploying takes just two commands:</p>
+<pre><code class="language-bash">helm repo add govein https://zeljkobenovic.github.io/govein
+helm install my-govein govein/govein  
+</code></pre>
+<h2>Outro</h2>
+<p>Observability is the backbone of a reliable backup strategy.
+By moving your Veeam metrics into an InfluxDB/Grafana stack using Govein, you gain the visibility needed to move from reactive troubleshooting to proactive infrastructure management.</p>
+<p>Ready to see your backups in a new light? Check out the <a href="https://github.com/ZeljkoBenovic/govein">Govein GitHub Repo</a> and start scraping!</p>
+<div class="post-meta">published Mar 2026</div></div></body></html>

@@ -1,349 +1,646 @@
-<!doctype html><html lang="en" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Željko Benović</title><style>:root {
-    --bg: #0e0e0e;
-    --text: #ffffff;
-    --card-bg: #1a1a1a;
-    --hover: #222;
+<!doctype html><html lang="en" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Željko Benović | Staff Platform Engineer</title><style>/* ─── FONT IMPORT ─────────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&display=swap');
 
-    --gold: #ffd700;
-    --radius: 12px;
-    --transition: all 0.3s ease;
-
-    --theme-accent: #6a4889;
+/* ─── CSS VARIABLES ───────────────────────────────────────────────────────── */
+:root {
+    --bg:         #080808;
+    --bg-card:    #0d1117;
+    --bg-hover:   #111820;
+    --text:       #c9d1d9;
+    --text-dim:   #6e7681;
+    --green:      #00ff88;
+    --green-dim:  #00c868;
+    --cyan:       #00d4ff;
+    --border:     #1a2a1a;
+    --border-dim: #161b22;
+    --radius:     6px;
+    --transition: all 0.25s ease;
+    --font:       'Fira Code', 'JetBrains Mono', 'Consolas', 'Courier New', monospace;
 }
 
-* {
+/* ─── RESET ───────────────────────────────────────────────────────────────── */
+*, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
+/* ─── SCANLINE EFFECT ─────────────────────────────────────────────────────── */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 255, 136, 0.015) 2px,
+        rgba(0, 255, 136, 0.015) 4px
+    );
+    pointer-events: none;
+    z-index: 9999;
+}
+
+/* ─── BASE ────────────────────────────────────────────────────────────────── */
 body {
-    font-family: 'Segoe UI', sans-serif;
+    font-family: var(--font);
     background-color: var(--bg);
     color: var(--text);
+    min-height: 100vh;
+    padding: 2rem 1rem 4rem;
+    line-height: 1.6;
+}
+
+/* ─── CONTAINER ───────────────────────────────────────────────────────────── */
+.container {
+    max-width: 900px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* ─── DIVIDER ─────────────────────────────────────────────────────────────── */
+.divider {
+    border: none;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--green-dim), transparent);
+    margin: 2.5rem 0;
+    opacity: 0.4;
+}
+
+/* ─── SECTION ─────────────────────────────────────────────────────────────── */
+.section {
+    margin-bottom: 0.5rem;
+}
+
+.section-header {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--green);
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.05em;
+    text-shadow: 0 0 12px rgba(0, 255, 136, 0.4);
+}
+
+/* ─── PROMPT ──────────────────────────────────────────────────────────────── */
+.prompt {
+    color: var(--green);
+    margin-right: 0.4rem;
+    font-weight: 700;
+}
+
+/* ─── HERO ────────────────────────────────────────────────────────────────── */
+.hero {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding: 2rem 0 1rem;
+}
+
+.hero-avatar {
     display: flex;
     align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    padding: 2rem;
-    transition: var(--transition);
-}
-
-.container {
-    max-width: 480px;
-    width: 100%;
-    background-color: var(--card-bg);
-    border-radius: var(--radius);
-    padding: 2rem;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    transition: var(--transition);
-}
-
-.post-container {
-    max-width: 786px;
-    margin: 0 auto;
-    padding: 2rem;
-    color: #c9d1d9;
-    font-family: 'Inter', -apple-system, sans-serif;
-    line-height: 1.6;
-    text-align: left;
-}
-.post-container h1 { font-size: 2rem; color: #fff; margin-bottom: 0.5rem; text-align: center }
-.post-container h2 { color: #7a6d5d; margin: 1rem; border-bottom: 1px solid #7a6d5d; padding-bottom: 0.5rem; text-align: center }
-.post-container p {
-    margin-left: 1rem;
-    margin-right: 1rem;
-}
-.post-container pre {
-    padding-left: 10px;
-    margin: 0;
-    overflow-x: auto;
-    color: #d2a8ff;
-    font-family: 'Fira Code', monospace;
-    text-align: left;
-}
-.post-container code {
-    background: #000000;
-    margin: 1.5rem 0;
-    overflow: hidden;
-    padding: 5px;
-}
-.post-container .language-bash {
-    background: #000000;
-    overflow: hidden;
-    display: block;
-    padding: 5px;
-}
-.post-container .language-yaml {
-    background: #000000;
-    overflow: hidden;
-    display: block;
-    padding: 5px;
-}
-.post-container ul {
-    margin: 1rem;
-    padding-left: 1rem;
-}
-.post-container ol {
-    margin: 1rem;
-    padding-left: 1rem;
-}
-.post-container a {
-    color: #6f8ce3;
-}
-.post-container a:active {
-    color: #a4b6ed;
-}
-.post-container .post-meta {
-    color: #8b949e;
-    font-size: 0.9rem;
-    margin-top: 2rem;
-    text-align: center;
+    gap: 1.5rem;
 }
 
 .avatar {
-    width: 100px;
-    height: 100px;
+    width: 90px;
+    height: 90px;
     border-radius: 50%;
     object-fit: cover;
-    margin-bottom: 1rem;
-    border: 2px solid var(--gold);
+    border: 2px solid var(--green);
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+    flex-shrink: 0;
 }
 
-h1 {
-    font-size: 1.8rem;
-    margin-bottom: 1rem;
+.hero-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    width: 100%;
+}
+
+/* ─── GLITCH ANIMATION ────────────────────────────────────────────────────── */
+h1.glitch {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--green);
+    text-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+    position: relative;
+    display: inline-block;
+    letter-spacing: 0.02em;
+}
+
+h1.glitch:hover {
+    animation: glitch 0.4s steps(2, end) infinite;
+}
+
+h1.glitch::before,
+h1.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+
+h1.glitch:hover::before {
+    color: var(--cyan);
+    animation: glitch-before 0.4s steps(2, end) infinite;
+    clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+    transform: translateX(-3px);
+    opacity: 0.8;
+}
+
+h1.glitch:hover::after {
+    color: #ff0055;
+    animation: glitch-after 0.4s steps(2, end) infinite;
+    clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+    transform: translateX(3px);
+    opacity: 0.8;
+}
+
+@keyframes glitch {
+    0%   { transform: translate(0); }
+    20%  { transform: translate(-2px, 1px); }
+    40%  { transform: translate(2px, -1px); }
+    60%  { transform: translate(-1px, 2px); }
+    80%  { transform: translate(1px, -2px); }
+    100% { transform: translate(0); }
+}
+
+@keyframes glitch-before {
+    0%   { transform: translateX(-3px); }
+    50%  { transform: translateX(3px); }
+    100% { transform: translateX(-3px); }
+}
+
+@keyframes glitch-after {
+    0%   { transform: translateX(3px); }
+    50%  { transform: translateX(-3px); }
+    100% { transform: translateX(3px); }
+}
+
+/* ─── HERO TEXT ───────────────────────────────────────────────────────────── */
+.hero-title {
+    font-size: 0.95rem;
+    color: var(--cyan);
+    font-weight: 500;
+    letter-spacing: 0.03em;
 }
 
 .bio {
-    font-size: 1rem;
-    color: #888;
-    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    line-height: 1.7;
+    max-width: 680px;
 }
 
-.links {
+/* ─── ROLE CHIPS ──────────────────────────────────────────────────────────── */
+.role-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.25rem;
+}
+
+.chip {
+    background: rgba(0, 255, 136, 0.08);
+    border: 1px solid rgba(0, 255, 136, 0.3);
+    color: var(--green);
+    border-radius: 3px;
+    padding: 0.2rem 0.6rem;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+}
+
+/* ─── HERO LINKS ──────────────────────────────────────────────────────────── */
+.hero-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+.hero-link {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: var(--transition);
+    letter-spacing: 0.02em;
+}
+
+.hero-link:hover {
+    color: var(--green);
+    text-shadow: 0 0 8px rgba(0, 255, 136, 0.5);
+}
+
+/* ─── SKILLS ──────────────────────────────────────────────────────────────── */
+.skills-grid {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
-    margin-bottom: 2rem;
+    gap: 1.25rem;
 }
 
-.link {
-    background-color: var(--hover);
-    border-radius: var(--radius);
-    padding: 0.75rem 1rem;
-    text-decoration: none;
-    color: var(--text);
-    transition: var(--transition);
-    font-weight: 500;
-}
-
-.link:hover {
-    opacity: 0.8;
-}
-
-.social-icons {
+.skill-category {
     display: flex;
-    justify-content: center;
-    gap: 1rem;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
-.social-icons a {
+.skill-cat-label {
+    font-size: 0.78rem;
+    color: var(--cyan);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.skill-tag {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
     color: var(--text);
-    transition: var(--transition);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-}
-
-.social-icons a:hover {
-    top: 10px;
-}
-
-.social-icons svg {
-    width: 36px;
-    height: 36px;
-    fill: var(--text);
-}
-
-.footer {
-    margin-top: 2rem;
+    border-radius: var(--radius);
+    padding: 0.25rem 0.65rem;
     font-size: 0.8rem;
-    color: #666;
-}
-
-.credit {
-    margin-top: 0.75rem;
-    font-size: 0.75rem;
-    color: #777;
-}
-
-.credit a {
-    color: var(--text);
-    text-decoration: underline;
     transition: var(--transition);
 }
 
-.theme-toggle {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background: none;
-    border: none;
-    color: var(--text);
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: var(--transition);
+.skill-tag:hover {
+    border-color: var(--green-dim);
+    color: var(--green);
 }
 
-.theme-toggle:hover {
-    opacity: 0.8;
-}
-
-.description {
-    color: #888888;
-    font-family: 'Helvetica Neue', Arial, sans-serif;
-    font-size: 12px;
-    line-height: 1.5;
-    text-align: left;
-    margin-top: 5px;
-    margin-bottom: 10px;
-}
-
-/* Rounded border */
-hr.rounded {
-    border: none;
-    height: 2px;
-    background: #888;
-    border-radius: 2px;
-    margin: 30px auto;
-    width: 50%;
-}
-
-/* Timeline Container */
+/* ─── TIMELINE ────────────────────────────────────────────────────────────── */
 .timeline {
-    background: var(--card-bg);
-    margin: 10px auto;
-    padding: 10px;
+    padding: 0.5rem 0;
 }
 
-/* Card container */
+.outer {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    border-left: 2px solid var(--border);
+    padding-left: 1.5rem;
+    margin-left: 0.5rem;
+}
+
 .card {
     position: relative;
-    max-width: 400px;
 }
 
-/* setting padding based on even or odd */
-.card:nth-child(odd) {
-    padding: 30px 0 30px 30px;
-}
-.card:nth-child(even) {
-    padding: 30px 30px 30px 0;
-}
-/* Global ::before */
 .card::before {
     content: "";
     position: absolute;
-    width: 50%;
-    border: solid var(--theme-accent);
+    left: -1.875rem;
+    top: 0.75rem;
+    width: 10px;
+    height: 10px;
+    background: var(--bg);
+    border: 2px solid var(--green);
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(0, 255, 136, 0.5);
 }
 
-/* Setting the border of top, bottom, left */
-.card:nth-child(odd)::before {
-    left: 0px;
-    top: -4.5px;
-    bottom: -4.5px;
-    border-width: 5px 0 5px 5px;
-    border-radius: 50px 0 0 50px;
+.info {
+    background: var(--bg-card);
+    border: 1px solid var(--border-dim);
+    border-radius: var(--radius);
+    padding: 1rem 1.25rem;
+    transition: var(--transition);
 }
 
-/* Setting the top and bottom to "-5px" because earlier it was out of a pixel in mobile devices */
-@media only screen and (max-width: 400px) {
-    .card:nth-child(odd)::before {
-        top: -5px;
-        bottom: -5px;
+.info:hover {
+    border-color: var(--border);
+    background: var(--bg-hover);
+}
+
+.job-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.title {
+    color: var(--green);
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
+}
+
+.job-date {
+    color: var(--cyan);
+    font-size: 0.78rem;
+    white-space: nowrap;
+    opacity: 0.85;
+    flex-shrink: 0;
+}
+
+.job-bullet {
+    color: var(--text-dim);
+    font-size: 0.83rem;
+    line-height: 1.6;
+    padding: 0.15rem 0;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.bullet {
+    color: var(--green-dim);
+    flex-shrink: 0;
+    opacity: 0.7;
+}
+
+/* ─── PROJECT GRID ────────────────────────────────────────────────────────── */
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.project-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border-dim);
+    border-left: 3px solid var(--green-dim);
+    border-radius: var(--radius);
+    padding: 1rem 1.1rem;
+    text-decoration: none;
+    color: var(--text);
+    transition: var(--transition);
+}
+
+.project-card:hover {
+    border-left-color: var(--green);
+    background: var(--bg-hover);
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.08), -2px 0 12px rgba(0, 255, 136, 0.15);
+    transform: translateX(2px);
+}
+
+.project-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.project-name {
+    color: var(--green);
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-shadow: 0 0 8px rgba(0, 255, 136, 0.3);
+}
+
+.project-stars {
+    color: #ffd700;
+    font-size: 0.8rem;
+    opacity: 0.9;
+}
+
+.project-desc {
+    color: var(--text-dim);
+    font-size: 0.82rem;
+    line-height: 1.55;
+    flex: 1;
+}
+
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+}
+
+.tag {
+    background: rgba(0, 212, 255, 0.07);
+    border: 1px solid rgba(0, 212, 255, 0.2);
+    color: var(--cyan);
+    border-radius: 3px;
+    padding: 0.15rem 0.45rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.02em;
+}
+
+/* ─── BLOG POST LIST ──────────────────────────────────────────────────────── */
+.post-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.post-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg-card);
+    border: 1px solid var(--border-dim);
+    border-radius: var(--radius);
+    padding: 0.85rem 1.1rem;
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.post-card:hover {
+    border-color: var(--green-dim);
+    background: var(--bg-hover);
+}
+
+.post-title {
+    color: var(--text);
+    font-size: 0.9rem;
+}
+
+.post-arrow {
+    color: var(--green);
+    opacity: 0.6;
+    transition: var(--transition);
+}
+
+.post-card:hover .post-arrow {
+    opacity: 1;
+    transform: translateX(3px);
+}
+
+.empty {
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    font-style: italic;
+}
+
+/* ─── FOOTER ──────────────────────────────────────────────────────────────── */
+.footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-dim);
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    text-align: center;
+}
+
+/* ─── POST PAGE ───────────────────────────────────────────────────────────── */
+.post-container {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    color: var(--text);
+    font-family: var(--font);
+    line-height: 1.75;
+}
+
+.post-container h1 {
+    font-size: 1.9rem;
+    color: var(--green);
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 16px rgba(0, 255, 136, 0.3);
+}
+
+.post-container h2 {
+    color: var(--cyan);
+    margin: 1.75rem 0 0.75rem;
+    border-bottom: 1px solid var(--border-dim);
+    padding-bottom: 0.4rem;
+}
+
+.post-container h3 {
+    color: var(--text);
+    margin: 1.25rem 0 0.5rem;
+}
+
+.post-container p {
+    margin: 0.75rem 0;
+    color: var(--text);
+}
+
+.post-container pre {
+    background: #010409;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem 1.25rem;
+    overflow-x: auto;
+    margin: 1rem 0;
+}
+
+.post-container code {
+    font-family: var(--font);
+    color: #00ff88;
+    background: rgba(0, 255, 136, 0.07);
+    padding: 0.15rem 0.35rem;
+    border-radius: 3px;
+    font-size: 0.88em;
+}
+
+.post-container pre code {
+    background: transparent;
+    padding: 0;
+    color: #c9d1d9;
+}
+
+.post-container ul,
+.post-container ol {
+    margin: 0.75rem 0 0.75rem 1.5rem;
+}
+
+.post-container li {
+    margin: 0.3rem 0;
+}
+
+.post-container a {
+    color: var(--cyan);
+    text-decoration: underline;
+    text-decoration-color: rgba(0, 212, 255, 0.3);
+    transition: var(--transition);
+}
+
+.post-container a:hover {
+    color: var(--green);
+}
+
+.post-meta {
+    margin-top: 2.5rem;
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    text-align: center;
+    border-top: 1px solid var(--border-dim);
+    padding-top: 1rem;
+}
+
+/* ─── BLOG INDEX ──────────────────────────────────────────────────────────── */
+.blog-header {
+    font-size: 1.5rem;
+    color: var(--green);
+    margin-bottom: 1.5rem;
+    text-shadow: 0 0 12px rgba(0, 255, 136, 0.3);
+}
+
+.blog-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.blog-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg-card);
+    border: 1px solid var(--border-dim);
+    border-radius: var(--radius);
+    padding: 0.85rem 1.1rem;
+    text-decoration: none;
+    color: var(--text);
+    font-size: 0.9rem;
+    transition: var(--transition);
+}
+
+.blog-link:hover {
+    border-color: var(--green-dim);
+    background: var(--bg-hover);
+    color: var(--green);
+}
+
+/* ─── RESPONSIVE ──────────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+    body {
+        padding: 1rem 0.75rem 3rem;
+    }
+
+    h1.glitch {
+        font-size: 1.5rem;
+    }
+
+    .project-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .job-header {
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .hero-links {
+        gap: 0.5rem;
     }
 }
 
-/* Setting the border of top, bottom, right */
-.card:nth-child(even)::before {
-    right: 0;
-    top: 0;
-    bottom: 0;
-    border-width: 5px 5px 5px 0;
-    border-radius: 0 50px 50px 0;
-}
+@media (max-width: 480px) {
+    .skills-grid {
+        gap: 1rem;
+    }
 
-/* Removing the border if it is the first card */
-.card:first-child::before {
-    border-top: 0;
-    border-top-left-radius: 0;
+    .project-card:hover {
+        transform: none;
+    }
 }
-
-/* Removing the border if it is the last card  and it's odd */
-.card:last-child:nth-child(odd)::before {
-    border-bottom: 0;
-    border-bottom-left-radius: 0;
-}
-
-/* Removing the border if it is the last card  and it's even */
-.card:last-child:nth-child(even)::before {
-    border-bottom: 0;
-    border-bottom-right-radius: 0;
-}
-
-/* Information about the timeline */
-.info {
-    display: flex;
-    flex-direction: column;
-    background: var(--card-bg);
-    color: gray;
-    border-radius: 10px;
-    padding: 10px;
-}
-
-/* Title of the card */
-.title {
-    color: var(--theme-accent);
-    position: relative;
-    text-align: center;
-}
-
-/* Timeline dot  */
-.title::before {
-    content: "";
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    background: white;
-    border-radius: 20px;
-    border: 3px solid var(--theme-accent);
-}
-
-/* text left if the card is odd  */
-.card:nth-child(odd) > .info > .title {
-    text-align: center;
-}
-
-/* text right if the card is even  */
-.card:nth-child(even) > .info > .title {
-    text-align: center;
-}
-
-/* setting dot to the left if the card is odd */
-.card:nth-child(odd) > .info > .title::before {
-    left: -45px;
-}
-
-/* setting dot to the right if the card is odd */
-.card:nth-child(even) > .info > .title::before {
-    right: -45px;
-}
-</style></head><body><div class="container"><img src="https://unavatar.io/github/zeljkobenovic" alt="Željko Benović Avatar" class="avatar"><h1>Željko Benović</h1><p class="bio">Kubernetes · Helm · DevSecOps · GigaChad</p><div class="links"><h2>About Me</h2><a href="https://github.com/ZeljkoBenovic" class="link" target="_blank">GitHub Page</a> <a href="https://www.linkedin.com/in/zeljko-benovic" class="link" target="_blank">LinkedIN Profile</a> <a href="/blog" class="link">Blog Page</a></div><div class=""><h2>GigaChad Path</h2><div class="timeline"><div class="outer"><div class="card"><div class="info"><h3 class="title">Senior Platform Engineer @ Linea</h3><p>Maintaining EKS/GitHub/ArgoCD/Helm stack. 
-Building platform tools. 
-Building Kubernetes operators.
-Keeping Linea blockchain running.</p></div></div><div class="card"><div class="info"><h3 class="title">Senior DevOps Engineer @ Route3</h3><p>Engineered a GitOps framework leveraging GitHub, GitHub Actions, AWS IAM, AWS OIDC and AWS SSM, all orchestrated seamlessly with Terraform.</p></div></div><div class="card"><div class="info"><h3 class="title">Senior DevOps Engineer @ Polygon Labs</h3><p>Among the top 5 core contributors to the now deprecated Polygon project - Polygon Edge.</p></div></div></div></div></div><div class="links"><h2>Projects</h2><a href="https://github.com/ZeljkoBenovic/govein" class="link" target="_blank">Govein<br><span class="description">Complete solution for your Veeam B&amp;R observability.</span></a><a href="https://github.com/ZeljkoBenovic/gombak" class="link" target="_blank">Gombak<br><span class="description">Mikrotik router discovery and backup service.</span></a><a href="https://github.com/ZeljkoBenovic/tsbc" class="link" target="_blank">TSBC<br><span class="description">Teams SBC - connect your PBX with MS Teams.</span></a><a href="https://github.com/ZeljkoBenovic/vmex" class="link" target="_blank">Vmex<br><span class="description">Filter and export your VMWare VMs into an excel report.</span></a><a href="https://github.com/ZeljkoBenovic/kmon" class="link" target="_blank">Kmon<br><span class="description">Swiss army knife for K8s administrators using k9s TUI.</span></a></div><div class="links"><h2>Useful Stuff</h2><a href="/blog/2025/12/30/easy-mikrotik-backup" class="link">Easy Mikrotik Backup</a><a href="/blog/2025/12/30/veeam-backup-grafana-dashboard" class="link">Veeam Backup Grafana Dashboard</a></div><div class="social-icons"><a href="https://github.com/ZeljkoBenovic" target="_blank" title="GitHub" aria-label="GitHub"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.24902C6.51613 2.24902 2 6.70064 2 12.249C2 16.6361 4.87097 20.3781 8.87097 21.7329C9.3871 21.8297 9.54839 21.5071 9.54839 21.2813C9.54839 21.0555 9.54839 20.4103 9.51613 19.5393C6.74194 20.1845 6.16129 18.1845 6.16129 18.1845C5.70968 17.0555 5.03226 16.7329 5.03226 16.7329C4.12903 16.0877 5.06452 16.0877 5.06452 16.0877C6.06452 16.12 6.6129 17.12 6.6129 17.12C7.48387 18.6684 8.96774 18.2168 9.51613 17.9264C9.6129 17.2813 9.87097 16.8297 10.1613 16.5716C7.96774 16.3458 5.6129 15.4748 5.6129 11.6684C5.6129 10.5716 6.03226 9.70064 6.64516 9.02322C6.54839 8.79741 6.19355 7.76515 6.74194 6.37806C6.74194 6.37806 7.6129 6.11999 9.51613 7.41031C10.3226 7.18451 11.1613 7.05548 12.0323 7.05548C12.9032 7.05548 13.7742 7.15225 14.5484 7.41031C16.4516 6.15225 17.2903 6.37806 17.2903 6.37806C17.8387 7.73289 17.5161 8.79741 17.3871 9.02322C18.0323 9.70064 18.4194 10.6039 18.4194 11.6684C18.4194 15.4748 16.0645 16.3458 13.871 16.5716C14.2258 16.8942 14.5484 17.5393 14.5484 18.4426C14.5484 19.7974 14.5161 20.8619 14.5161 21.1845C14.5161 21.4426 14.7097 21.7329 15.1935 21.6361C19.129 20.3135 22 16.6039 22 12.1845C21.9677 6.70064 17.4839 2.24902 12 2.24902Z"></path></svg></a> <a href="https://www.linkedin.com/in/zeljko-benovic" target="_blank" title="LinkedIn" aria-label="LinkedIn"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19.7065 3H4.34844C3.62264 3 3.04199 3.58065 3.04199 4.30645V19.6935C3.04199 20.3903 3.62264 21 4.34844 21H19.6485C20.3743 21 20.9549 20.4194 20.9549 19.6935V4.27742C21.013 3.58065 20.4323 3 19.7065 3ZM8.35491 18.3H5.71297V9.73548H8.35491V18.3ZM7.01942 8.54516C6.14846 8.54516 5.4807 7.84839 5.4807 7.00645C5.4807 6.16452 6.17749 5.46774 7.01942 5.46774C7.86136 5.46774 8.55813 6.16452 8.55813 7.00645C8.55813 7.84839 7.91942 8.54516 7.01942 8.54516ZM18.371 18.3H15.7291V14.1484C15.7291 13.1613 15.7001 11.8548 14.3356 11.8548C12.942 11.8548 12.7388 12.9581 12.7388 14.0613V18.3H10.0968V9.73548H12.6807V10.9258H12.7097C13.0872 10.229 13.9291 9.53226 15.2356 9.53226C17.9356 9.53226 18.4291 11.2742 18.4291 13.6548V18.3H18.371Z"></path></svg></a> <a href="mailto:benoviczeljko87@gmail.com" target="_blank" title="Email" aria-label="Email"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"></path></svg></a></div><div class="footer">© <span id="year">2025</span> Željko Benović</div></div></body></html>
+</style></head><body><div class="container"><!-- HERO --><section class="hero"><div class="hero-avatar"><img src="https://unavatar.io/github/zeljkobenovic" alt="Željko Benović Avatar" class="avatar"></div><div class="hero-text"><h1 class="glitch" data-text="Željko Benović"><span class="prompt">~ $</span> Željko Benović</h1><p class="hero-title">// Staff Platform Engineer</p><p class="bio">Platform/DevSecOps/SRE engineer with extensive expertise in development, integration, deployments, monitoring, and security. Kubernetes gigachad. Golang wizard. Blockchain connoisseur.</p><div class="role-chips"><span class="chip">Staff Platform Engineer</span><span class="chip">DevSecOps</span><span class="chip">SRE</span></div><div class="hero-links"><a href="https://github.com/ZeljkoBenovic" class="hero-link" target="_blank">[ github ]</a> <a href="https://www.linkedin.com/in/zeljko-benovic" class="hero-link" target="_blank">[ linkedin ]</a> <a href="/blog" class="hero-link">[ blog ]</a> <a href="mailto:benoviczeljko87@gmail.com" class="hero-link">[ email ]</a></div></div></section><div class="divider"></div><!-- SKILLS --><section class="section"><h2 class="section-header"><span class="prompt">></span> skills</h2><div class="skills-grid"><div class="skill-category"><div class="skill-cat-label">// DevOps</div><div class="skill-tags"><span class="skill-tag">Kubernetes</span><span class="skill-tag">K8s Operators</span><span class="skill-tag">Service Mesh</span><span class="skill-tag">Helm</span><span class="skill-tag">ArgoCD</span><span class="skill-tag">Terraform</span><span class="skill-tag">GitOps</span></div></div><div class="skill-category"><div class="skill-cat-label">// Cloud</div><div class="skill-tags"><span class="skill-tag">AWS</span><span class="skill-tag">GCP</span><span class="skill-tag">HyperV</span><span class="skill-tag">VMWare</span><span class="skill-tag">KVM</span></div></div><div class="skill-category"><div class="skill-cat-label">// Observability</div><div class="skill-tags"><span class="skill-tag">Prometheus</span><span class="skill-tag">Grafana</span><span class="skill-tag">Loki</span><span class="skill-tag">OTEL</span><span class="skill-tag">Pyroscope</span><span class="skill-tag">InfluxDB</span><span class="skill-tag">Telegraf</span></div></div><div class="skill-category"><div class="skill-cat-label">// Programming</div><div class="skill-tags"><span class="skill-tag">Go</span><span class="skill-tag">Python</span><span class="skill-tag">Bash</span></div></div></div></section><div class="divider"></div><!-- GIGACHAD PATH --><section class="section"><h2 class="section-header"><span class="prompt">></span> GigaChad_Path</h2><div class="timeline"><div class="outer"><div class="card"><div class="info"><div class="job-header"><h3 class="title">Staff Platform Engineer @ Consensys - Linea</h3><span class="job-date">Apr 2024 – Current</span></div><p class="job-bullet"><span class="bullet">$</span> Built Linea Edge EKS clusters in different AZs hosting P2P EL/CL nodes, defining a clear separation between core infrastructure and public-facing P2P nodes.</p><p class="job-bullet"><span class="bullet">$</span> Built GitOps stack with ArgoCD, GitHub Actions and AWS IAM using &#34;Apps of Apps&#34; pattern for seamless K8s deployments.</p><p class="job-bullet"><span class="bullet">$</span> Implemented rigorous RBAC policies for Kubernetes and ArgoCD relying on OKTA and AWS IAM.</p><p class="job-bullet"><span class="bullet">$</span> Implemented Web3Signer REST service in a restricted AWS account with HSM for signing core transactions.</p><p class="job-bullet"><span class="bullet">$</span> Contributed to Infura&#39;s Kubernetes Operator enabling seamless blockchain node scaling, syncing, backup and peer discovery.</p><p class="job-bullet"><span class="bullet">$</span> Implemented Karpenter across all EKS clusters replacing AWS ASG; reduced overall infrastructure costs by 60% via Spot instances.</p><p class="job-bullet"><span class="bullet">$</span> K8s security hardening: NetworkPolicies, Istio service mesh, Velero, VolumeSnapshot CronJobs, External Secrets Operator.</p><p class="job-bullet"><span class="bullet">$</span> Created a pod autodiscovery service multiplexing CL engine API requests to all pods enabling out-of-sync pods to resume syncing.</p></div></div><div class="card"><div class="info"><div class="job-header"><h3 class="title">Head of DevOps @ Route3</h3><span class="job-date">May 2023 – Jan 2024</span></div><p class="job-bullet"><span class="bullet">$</span> Engineered a GitOps framework leveraging GitHub Actions, AWS IAM, AWS OIDC and AWS SSM, orchestrated with Terraform.</p><p class="job-bullet"><span class="bullet">$</span> Designed and launched a complete observability platform: Grafana, Prometheus, Telegraf, InfluxDB, Loki and Grafana Pyroscope.</p><p class="job-bullet"><span class="bullet">$</span> Developed backend Go codebase integrating aws-sdk for AWS interaction and go-ansible to provision services on EC2 instances.</p></div></div><div class="card"><div class="info"><div class="job-header"><h3 class="title">Senior DevOps Engineer @ Polygon Labs</h3><span class="job-date">Sep 2021 – May 2023</span></div><p class="job-bullet"><span class="bullet">$</span> Among the top 5 core contributors to the now deprecated Polygon Edge project.</p><p class="job-bullet"><span class="bullet">$</span> Architected a comprehensive network stress testing and TPS benchmark framework with real-time Slack notifications per deployment.</p><p class="job-bullet"><span class="bullet">$</span> Led the team in developing Terraform code for the Polygon Edge AWS Quick Start project.</p><p class="job-bullet"><span class="bullet">$</span> Led the team in creating Helm Charts for Polygon Edge.</p></div></div><div class="card"><div class="info"><div class="job-header"><h3 class="title">Senior Network Engineer @ IPHouse d.o.o.</h3><span class="job-date">Apr 2017 – Aug 2021</span></div><p class="job-bullet"><span class="bullet">$</span> Designed and implemented core services on an on-prem VMWare cluster including routing, firewall, security, VPN and Veeam D&amp;R backup.</p><p class="job-bullet"><span class="bullet">$</span> Deployed IPAM, IDP and IDS solutions; managed a team of 5 engineers.</p></div></div></div></div></section><div class="divider"></div><!-- PROJECTS --><section class="section"><h2 class="section-header"><span class="prompt">></span> projects</h2><div class="project-grid"><a href="https://github.com/ZeljkoBenovic/gombak" class="project-card" target="_blank"><div class="project-top"><span class="project-name">gombak</span> <span class="project-stars">★ 14</span></div><p class="project-desc">MikroTik router automated discovery and backup service.</p><div class="project-tags"><span class="tag">Go</span><span class="tag">MikroTik</span><span class="tag">SSH</span></div></a><a href="https://github.com/ZeljkoBenovic/tsbc" class="project-card" target="_blank"><div class="project-top"><span class="project-name">tsbc</span> <span class="project-stars">★ 13</span></div><p class="project-desc">Teams Direct Routing SBC — connect your PBX with MS Teams.</p><div class="project-tags"><span class="tag">Go</span><span class="tag">Kamailio</span><span class="tag">Docker</span></div></a><a href="https://github.com/ZeljkoBenovic/aws-commander" class="project-card" target="_blank"><div class="project-top"><span class="project-name">aws-commander</span> <span class="project-stars">★ 5</span></div><p class="project-desc">Run scripts on EC2 instances without direct SSH access via AWS SSM.</p><div class="project-tags"><span class="tag">Go</span><span class="tag">AWS</span><span class="tag">SSM</span></div></a><a href="https://github.com/ZeljkoBenovic/govein" class="project-card" target="_blank"><div class="project-top"><span class="project-name">govein</span> <span class="project-stars">★ 4</span></div><p class="project-desc">Veeam B&amp;R metrics exporter for InfluxDB and Grafana observability.</p><div class="project-tags"><span class="tag">Go</span><span class="tag">Docker</span><span class="tag">Kubernetes</span></div></a><a href="https://github.com/ZeljkoBenovic/tpser" class="project-card" target="_blank"><div class="project-top"><span class="project-name">tpser</span> <span class="project-stars">★ 1</span></div><p class="project-desc">Block utilization and TPS benchmarking tool for any EVM-compatible chain.</p><div class="project-tags"><span class="tag">Go</span><span class="tag">Ethereum</span><span class="tag">Blockchain</span></div></a><a href="https://github.com/ZeljkoBenovic/vmex" class="project-card" target="_blank"><div class="project-top"><span class="project-name">vmex</span> <span class="project-stars">★ 1</span></div><p class="project-desc">Filter and export VMware vCenter VMs to an Excel report.</p><div class="project-tags"><span class="tag">Go</span><span class="tag">VMware</span></div></a><a href="https://github.com/ZeljkoBenovic/kmon" class="project-card" target="_blank"><div class="project-top"><span class="project-name">kmon</span> </div><p class="project-desc">K8s admin swiss knife — VolumeSnapshot from PVC, k9s plugin (wip).</p><div class="project-tags"><span class="tag">Go</span><span class="tag">Kubernetes</span></div></a></div></section><div class="divider"></div><!-- BLOG --><section class="section"><h2 class="section-header"><span class="prompt">></span> useful_stuff</h2><div class="post-list"><a href="/blog/2026/03/18/easy-mikrotik-backup" class="post-card"><span class="post-title">Easy Mikrotik Backup</span> <span class="post-arrow">→</span></a><a href="/blog/2026/03/18/veeam-backup-grafana-dashboard" class="post-card"><span class="post-title">Veeam Backup Grafana Dashboard</span> <span class="post-arrow">→</span></a></div></section><div class="footer">© <span id="year">2026</span> Željko Benović</div></div></body></html>
