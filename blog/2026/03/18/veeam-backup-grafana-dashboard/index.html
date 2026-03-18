@@ -489,6 +489,44 @@ h1.glitch:hover::after {
     text-align: center;
 }
 
+/* ─── NAV BAR ─────────────────────────────────────────────────────────────── */
+.topnav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(8, 8, 8, 0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border-dim);
+    padding: 0.6rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.82rem;
+    font-family: var(--font);
+    color: var(--text-dim);
+    margin-bottom: 2rem;
+}
+
+.topnav a {
+    color: var(--green);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.topnav a:hover {
+    text-shadow: 0 0 8px rgba(0, 255, 136, 0.5);
+}
+
+.topnav .sep {
+    color: var(--text-dim);
+    opacity: 0.4;
+    margin: 0 0.1rem;
+}
+
+.topnav .crumb {
+    color: var(--text-dim);
+}
+
 /* ─── POST PAGE ───────────────────────────────────────────────────────────── */
 .post-container {
     max-width: 760px;
@@ -643,7 +681,7 @@ h1.glitch:hover::after {
         transform: none;
     }
 }
-</style></head><body><div class="container post-container"><h1>Monitoring Veeam B&amp;R with Govein</h1>
+</style></head><body><nav class="topnav"><span class="prompt">~</span> <span class="sep">/</span> <a href="/">home</a> <span class="sep">/</span> <a href="/blog">blog</a> <span class="sep">/</span> <span class="crumb">Veeam Backup Grafana Dashboard</span></nav><div class="container post-container"><h1>Monitoring Veeam B&amp;R with Govein</h1>
 <p>In the world of backup administration, &quot;no news is good news&quot; is a dangerous philosophy.
 You don't want to find out your backup jobs have been failing for three days only when you actually need to restore a critical server.</p>
 <p>While Veeam Backup &amp; Replication (VBR) provides email reports, modern IT teams need real-time, centralized observability and alerting.
