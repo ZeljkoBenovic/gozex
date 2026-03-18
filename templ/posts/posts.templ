@@ -9,9 +9,26 @@ import (
     "github.com/ZeljkoBenovic/gozex/templ/blog"
 )
 
+templ navBar(title string) {
+    <nav class="topnav">
+        <span class="prompt">~</span>
+        <span class="sep">/</span>
+        <a href="/">home</a>
+        <span class="sep">/</span>
+        if title == "" {
+            <span class="crumb">blog</span>
+        } else {
+            <a href="/blog">blog</a>
+            <span class="sep">/</span>
+            <span class="crumb">{ title }</span>
+        }
+    </nav>
+}
+
 templ Body(b blog.Blog) {
     <body>
-    <div class="container" style="padding: 2rem 1rem;">
+    @navBar("")
+    <div class="container" style="padding: 0 1rem 2rem;">
         <h2 class="blog-header"><span style="color: #00ff88; margin-right: 0.4rem;">></span> posts</h2>
         <div class="blog-list">
         for _, p := range b.Posts {
@@ -25,8 +42,9 @@ templ Body(b blog.Blog) {
     </body>
 }
 
-templ Post(postContent templ.Component) {
+templ Post(postContent templ.Component, title string) {
     <body>
+    @navBar(title)
     <div class="container post-container">
     @postContent
     <div class="post-meta">published { time.Now().Format("Jan 2006") }</div>

@@ -134,7 +134,7 @@ func main() {
 		content := posts.Unsafe(buf.String())
 
 		// Use templ to render the template containing the raw HTML.
-		if err = blog.Index(data.Name, posts.Post(content)).Render(ctx, f); err != nil {
+		if err = blog.Index(data.Name, posts.Post(content, post.Title)).Render(ctx, f); err != nil {
 			log.Fatalf("failed to write output file: %v", err)
 		}
 	}
