@@ -497,14 +497,19 @@ h1.glitch:hover::after {
     background: rgba(8, 8, 8, 0.92);
     backdrop-filter: blur(8px);
     border-bottom: 1px solid var(--border-dim);
-    padding: 0.6rem 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.topnav-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0.6rem 1rem;
     display: flex;
     align-items: center;
     gap: 0.4rem;
     font-size: 0.82rem;
     font-family: var(--font);
     color: var(--text-dim);
-    margin-bottom: 2rem;
 }
 
 .topnav a {

@@ -11,17 +11,19 @@ import (
 
 templ navBar(title string) {
     <nav class="topnav">
-        <span class="prompt">~</span>
-        <span class="sep">/</span>
-        <a href="/">home</a>
-        <span class="sep">/</span>
-        if title == "" {
-            <span class="crumb">blog</span>
-        } else {
-            <a href="/blog">blog</a>
+        <div class="topnav-inner">
+            <span class="prompt">~</span>
             <span class="sep">/</span>
-            <span class="crumb">{ title }</span>
-        }
+            <a href="/">home</a>
+            <span class="sep">/</span>
+            if title == "" {
+                <span class="crumb">blog</span>
+            } else {
+                <a href="/blog">blog</a>
+                <span class="sep">/</span>
+                <span class="crumb">{ title }</span>
+            }
+        </div>
     </nav>
 }
 
