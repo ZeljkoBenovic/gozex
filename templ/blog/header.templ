@@ -5,11 +5,34 @@ import _ "embed"
 //go:embed style.css
 var rawCSS []byte
 
-templ header(name string) {
+templ header(seo SEOMeta) {
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{ name } | Staff Platform Engineer</title>
+    <title>{ seo.Title }</title>
+    if seo.Description != "" {
+        <meta name="description" content={ seo.Description } />
+    }
+    if seo.CanonicalURL != "" {
+        <link rel="canonical" href={ templ.SafeURL(seo.CanonicalURL) } />
+    }
+    <meta property="og:title" content={ seo.Title } />
+    if seo.OGType != "" {
+        <meta property="og:type" content={ seo.OGType } />
+    } else {
+        <meta property="og:type" content="website" />
+    }
+    if seo.Description != "" {
+        <meta property="og:description" content={ seo.Description } />
+    }
+    if seo.CanonicalURL != "" {
+        <meta property="og:url" content={ seo.CanonicalURL } />
+    }
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     @templ.Raw("<style>" + string(rawCSS) + "</style>")
+    if seo.JSONLD != "" {
+        @templ.Raw(`<script type="application/ld+json">` + seo.JSONLD + `</script>`)
+    }
 </head>
 }

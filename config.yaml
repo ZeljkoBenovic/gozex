@@ -1,5 +1,8 @@
 name: Željko Benović
 title: Staff Platform Engineer
+site_url: https://zeljkobenovic.com
+company: Consensys
+seo_description: "Staff Platform Engineer specializing in Kubernetes, SRE, and DevSecOps. Expert in EKS, K8s Operators, ArgoCD GitOps, Terraform, and Go. Contributor at Consensys Linea and Polygon Labs."
 bio: "Platform/DevSecOps/SRE engineer with extensive expertise in development, integration, deployments, monitoring, and security. Kubernetes gigachad. Golang wizard. Blockchain connoisseur."
 github_name: zeljkobenovic
 github_url: https://github.com/ZeljkoBenovic
@@ -43,7 +46,7 @@ skills:
 projects:
     - name: gombak
       project_url: https://github.com/ZeljkoBenovic/gombak
-      description: MikroTik router automated discovery and backup service.
+      description: Go-based automation service for MikroTik router backup management — supports single-device and fleet-wide discovery via L2TP, SSH-based access, configurable retention policies, and system service integration for scheduled unattended backups.
       stars: 14
       tags:
           - Go
@@ -51,7 +54,7 @@ projects:
           - SSH
     - name: tsbc
       project_url: https://github.com/ZeljkoBenovic/tsbc
-      description: Teams Direct Routing SBC — connect your PBX with MS Teams.
+      description: Containerised Session Border Controller that bridges SIP/UDP-based PBX systems with Microsoft Teams Direct Routing — orchestrates Kamailio, RTPEngine, and LetsEncrypt TLS to handle signalling and media translation without dedicated SBC hardware.
       stars: 13
       tags:
           - Go
@@ -59,7 +62,7 @@ projects:
           - Docker
     - name: aws-commander
       project_url: https://github.com/ZeljkoBenovic/aws-commander
-      description: Run scripts on EC2 instances without direct SSH access via AWS SSM.
+      description: CLI tool for fleet-wide remote execution on EC2 instances via AWS SSM Run Command — supports ad-hoc shell commands, script files, and Ansible playbooks, targeting instances by ID or tag without requiring inbound SSH access or open security group rules.
       stars: 5
       tags:
           - Go
@@ -67,7 +70,7 @@ projects:
           - SSM
     - name: govein
       project_url: https://github.com/ZeljkoBenovic/govein
-      description: Veeam B&R metrics exporter for InfluxDB and Grafana observability.
+      description: Metrics exporter that queries Veeam Backup & Replication 12+ via its REST API and ships structured job telemetry to InfluxDB 2.0 — ships with a Grafana dashboard template and supports standalone binary, Docker Compose, and Kubernetes Helm deployment.
       stars: 4
       tags:
           - Go
@@ -75,7 +78,7 @@ projects:
           - Kubernetes
     - name: tpser
       project_url: https://github.com/ZeljkoBenovic/tpser
-      description: Block utilization and TPS benchmarking tool for any EVM-compatible chain.
+      description: EVM chain performance testing toolkit with two operating modes — a block-range analyser for historical TPS and gas utilisation reporting, and a sustained load generator for stress-testing nodes at configurable transaction rates over extended durations.
       stars: 1
       tags:
           - Go
@@ -83,14 +86,14 @@ projects:
           - Blockchain
     - name: vmex
       project_url: https://github.com/ZeljkoBenovic/vmex
-      description: Filter and export VMware vCenter VMs to an Excel report.
+      description: CLI utility that queries VMware vCenter via the vSphere API and exports filtered VM inventory data to formatted Excel workbooks — addressing the limitations of vCenter's native CSV-only export for operational reporting and auditing workflows.
       stars: 1
       tags:
           - Go
           - VMware
     - name: kmon
       project_url: https://github.com/ZeljkoBenovic/kmon
-      description: K8s admin swiss knife — VolumeSnapshot from PVC, k9s plugin (wip).
+      description: Kubernetes administrative CLI and k9s plugin that automates common storage operations — spins up debug pods from live PVCs, restores volumes from VolumeSnapshots, and generates on-demand or CronJob-scheduled snapshots with configurable snapshot class support.
       stars: 0
       tags:
           - Go
@@ -99,29 +102,34 @@ job_roles:
   - title: Staff Platform Engineer @ Consensys - Linea
     date: "Apr 2024 – Current"
     description: |-
-      Built Linea Edge EKS clusters in different AZs hosting P2P EL/CL nodes, defining a clear separation between core infrastructure and public-facing P2P nodes.
-      Built GitOps stack with ArgoCD, GitHub Actions and AWS IAM using "Apps of Apps" pattern for seamless K8s deployments.
-      Implemented rigorous RBAC policies for Kubernetes and ArgoCD relying on OKTA and AWS IAM.
-      Implemented Web3Signer REST service in a restricted AWS account with HSM for signing core transactions.
-      Contributed to Infura's Kubernetes Operator enabling seamless blockchain node scaling, syncing, backup and peer discovery.
-      Implemented Karpenter across all EKS clusters replacing AWS ASG; reduced overall infrastructure costs by 60% via Spot instances.
-      K8s security hardening: NetworkPolicies, Istio service mesh, Velero, VolumeSnapshot CronJobs, External Secrets Operator.
-      Created a pod autodiscovery service multiplexing CL engine API requests to all pods enabling out-of-sync pods to resume syncing.
+      Architected multi-AZ Linea Edge EKS clusters with strict network segmentation between core infrastructure and public-facing P2P Execution/Consensus Layer nodes, ensuring operational isolation and resilience.
+      Established a production-grade GitOps delivery pipeline using ArgoCD with the Apps-of-Apps pattern, GitHub Actions CI, and AWS IAM federation — providing fully auditable, declarative Kubernetes deployments.
+      Designed and enforced fine-grained RBAC governance across Kubernetes and ArgoCD, integrating Okta SSO and AWS IAM for centralised identity and least-privilege access control.
+      Deployed a hardened Web3Signer REST service within an isolated AWS account, backed by HSM-based key management for tamper-proof signing of core protocol transactions.
+      Contributed to Infura's Kubernetes Operator, implementing controllers for automated blockchain node lifecycle management — covering scaling, state synchronisation, snapshot backups, and peer discovery.
+      Migrated all EKS clusters from AWS Auto Scaling Groups to Karpenter, achieving a 60% reduction in infrastructure costs through intelligent Spot instance provisioning and bin-packing.
+      Drove continuous cloud cost optimisation by engineering Karpenter NodePool topologies that classify workloads by criticality — routing fault-tolerant, stateless services onto Spot instances while reserving On-Demand capacity for stateful and latency-sensitive components; combined with right-sizing resource requests and consolidation policies, this approach sustained cost efficiency gains without compromising SLO adherence.
+      Delivered comprehensive Kubernetes security hardening: NetworkPolicy enforcement, Istio service mesh with mTLS, Velero disaster recovery, VolumeSnapshot CronJobs, and External Secrets Operator for secrets hygiene.
+      Engineered a custom Go-based pod autodiscovery service that multiplexes Consensus Layer engine API requests across all pods, enabling out-of-sync nodes to transparently resume chain synchronisation without manual intervention.
+      Maintained 100% uptime SLO for public-facing RPC and P2P infrastructure, owning on-call rotations and incident response for a production blockchain network serving millions of transactions daily.
+      Instituted a rigorous post-incident culture through structured Root Cause Analysis (RCA) and blameless post-mortems, systematically eliminating classes of failure and driving measurable improvements in mean time to recovery (MTTR).
+      Defined and tracked service-level indicators (SLIs) and service-level objectives (SLOs) across the platform stack, using error-budget burn alerts to balance reliability investment with feature velocity.
+      Championed proactive reliability engineering by conducting regular game days and chaos experiments against EKS workloads, validating failover paths and strengthening the platform's resilience posture ahead of incidents.
   - title: Head of DevOps @ Route3
     date: "May 2023 – Jan 2024"
     description: |-
-      Engineered a GitOps framework leveraging GitHub Actions, AWS IAM, AWS OIDC and AWS SSM, orchestrated with Terraform.
-      Designed and launched a complete observability platform: Grafana, Prometheus, Telegraf, InfluxDB, Loki and Grafana Pyroscope.
-      Developed backend Go codebase integrating aws-sdk for AWS interaction and go-ansible to provision services on EC2 instances.
+      Designed and implemented a secure GitOps framework using GitHub Actions with AWS OIDC and IAM role federation, provisioned end-to-end via Terraform — eliminating static credentials from all deployment pipelines.
+      Architected and delivered a full-stack observability platform spanning metrics, logs, traces, and continuous profiling: Grafana, Prometheus, Telegraf, InfluxDB, Loki, and Grafana Pyroscope.
+      Developed a Go-based internal platform service integrating the AWS SDK for dynamic resource orchestration and go-ansible for idempotent service provisioning across EC2 fleets.
   - title: Senior DevOps Engineer @ Polygon Labs
     date: "Sep 2021 – May 2023"
     description: |-
-      Among the top 5 core contributors to the now deprecated Polygon Edge project.
-      Architected a comprehensive network stress testing and TPS benchmark framework with real-time Slack notifications per deployment.
-      Led the team in developing Terraform code for the Polygon Edge AWS Quick Start project.
-      Led the team in creating Helm Charts for Polygon Edge.
+      Ranked among the top 5 core contributors to the Polygon Edge open-source project, driving protocol tooling, infrastructure automation, and developer experience improvements across the release lifecycle.
+      Architected a network stress-testing and TPS benchmarking framework capable of targeting any EVM-compatible chain, with automated per-deployment Slack reporting for real-time performance visibility.
+      Led the infrastructure-as-code effort for the Polygon Edge AWS Quick Start, authoring Terraform modules that enabled one-click production-grade deployments on AWS.
+      Spearheaded the creation of official Helm Charts for Polygon Edge, standardising Kubernetes-native deployment patterns for node operators across the ecosystem.
   - title: Senior Network Engineer @ IPHouse d.o.o.
     date: "Apr 2017 – Aug 2021"
     description: |-
-      Designed and implemented core services on an on-prem VMWare cluster including routing, firewall, security, VPN and Veeam D&R backup.
-      Deployed IPAM, IDP and IDS solutions; managed a team of 5 engineers.
+      Designed and operated core on-premises infrastructure on a VMware vSphere cluster, encompassing BGP/OSPF routing, stateful firewall policies, site-to-site VPN, and enterprise Veeam Backup & Replication with tested DR runbooks.
+      Deployed and maintained IPAM, IDP, and IDS solutions to enforce network governance and threat detection across a multi-tenant environment; led and mentored a team of five engineers.

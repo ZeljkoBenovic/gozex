@@ -9,11 +9,9 @@ templ Body(b Blog) {
 <body>
     <nav class="topnav">
         <div class="topnav-inner">
-            <span class="prompt">~</span>
-            <span class="sep">/</span>
-            <span class="crumb">home</span>
-            <span class="sep" style="margin-left: auto; opacity: 1;">|</span>
-            <a href="/blog">blog</a>
+            <a href="/">{b.Name}</a>
+            <span style="margin-left: auto;"></span>
+            <a href="/blog">Blog</a>
         </div>
     </nav>
     <div class="container">
@@ -24,8 +22,8 @@ templ Body(b Blog) {
                 <img src={"https://unavatar.io/github/" + b.GitHubName} alt={b.Name + " Avatar"} class="avatar" />
             </div>
             <div class="hero-text">
-                <h1 class="glitch" data-text={b.Name}><span class="prompt">~ $</span> {b.Name}</h1>
-                <p class="hero-title">{ "//" } {b.Title}</p>
+                <h1 class="glitch" data-text={b.Name}>{b.Name}</h1>
+                <p class="hero-title">{b.Title}</p>
                 <p class="bio">{b.Bio}</p>
                 <div class="role-chips">
                     for _, role := range b.Roles {
@@ -33,10 +31,10 @@ templ Body(b Blog) {
                     }
                 </div>
                 <div class="hero-links">
-                    <a href={templ.SafeURL(b.GitHubURL)} class="hero-link" target="_blank">[ github ]</a>
-                    <a href={templ.SafeURL(b.LinkedInURL)} class="hero-link" target="_blank">[ linkedin ]</a>
-                    <a href="/blog" class="hero-link">[ blog ]</a>
-                    <a href={"mailto:" + b.Email} class="hero-link">[ email ]</a>
+                    <a href={templ.SafeURL(b.GitHubURL)} class="hero-link" target="_blank" rel="noopener noreferrer">GitHub</a>
+                    <a href={templ.SafeURL(b.LinkedInURL)} class="hero-link" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                    <a href="/blog" class="hero-link">Blog</a>
+                    <a href={"mailto:" + b.Email} class="hero-link">Email</a>
                 </div>
             </div>
         </section>
@@ -45,11 +43,11 @@ templ Body(b Blog) {
 
         <!-- SKILLS -->
         <section class="section">
-            <h2 class="section-header"><span class="prompt">></span> skills</h2>
+            <h2 class="section-header">Skills</h2>
             <div class="skills-grid">
                 for _, cat := range b.Skills {
                     <div class="skill-category">
-                        <div class="skill-cat-label">{ "//" } {cat.Category}</div>
+                        <div class="skill-cat-label">{cat.Category}</div>
                         <div class="skill-tags">
                             for _, item := range cat.Items {
                                 <span class="skill-tag">{item}</span>
@@ -64,7 +62,7 @@ templ Body(b Blog) {
 
         <!-- GIGACHAD PATH -->
         <section class="section">
-            <h2 class="section-header"><span class="prompt">></span> GigaChad_Path</h2>
+            <h2 class="section-header">Experience</h2>
             <div class="timeline">
                 <div class="outer">
                     for _, j := range b.JobRoles {
@@ -76,7 +74,7 @@ templ Body(b Blog) {
                                 </div>
                                 for _, line := range strings.Split(j.Description, "\n") {
                                     if strings.TrimSpace(line) != "" {
-                                        <p class="job-bullet"><span class="bullet">$</span> {strings.TrimSpace(line)}</p>
+                                        <p class="job-bullet"><span class="bullet">–</span> {strings.TrimSpace(line)}</p>
                                     }
                                 }
                             </div>
@@ -90,10 +88,10 @@ templ Body(b Blog) {
 
         <!-- PROJECTS -->
         <section class="section">
-            <h2 class="section-header"><span class="prompt">></span> projects</h2>
+            <h2 class="section-header">Projects</h2>
             <div class="project-grid">
                 for _, p := range b.Projects {
-                    <a href={templ.SafeURL(p.ProjectURL)} class="project-card" target="_blank">
+                    <a href={templ.SafeURL(p.ProjectURL)} class="project-card" target="_blank" rel="noopener noreferrer">
                         <div class="project-top">
                             <span class="project-name">{ p.Name }</span>
                             if p.Stars > 0 {
@@ -115,7 +113,7 @@ templ Body(b Blog) {
 
         <!-- BLOG -->
         <section class="section">
-            <h2 class="section-header"><span class="prompt">></span> useful_stuff</h2>
+            <h2 class="section-header">Writing</h2>
             if len(b.Posts) != 0 {
                 <div class="post-list">
                     for _, p := range b.Posts {
@@ -126,7 +124,7 @@ templ Body(b Blog) {
                     }
                 </div>
             } else {
-                <p class="empty">{ "//" } no posts yet</p>
+                <p class="empty">No posts yet.</p>
             }
         </section>
 

@@ -1,9 +1,9 @@
 package blog
 
-templ Index(title string, body templ.Component) {
+templ Index(seo SEOMeta, body templ.Component) {
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
-@header(title)
+@header(seo)
 @body
 </html>
 }
