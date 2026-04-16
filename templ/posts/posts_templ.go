@@ -113,7 +113,7 @@ func Body(b blog.Blog) templ.Component {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var4 templ.SafeURL
-			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinURLErrs(templ.SafeURL(path.Join(p.Date.Format("2006/01/02"), slug.Make(p.Title), "/")))
+			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinURLErrs(templ.SafeURL(path.Join(p.Date.Format("2006/01/02"), slug.Make(p.Title)) + "/"))
 			if templ_7745c5c3_Err != nil {
 				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/posts/posts.templ`, Line: 35, Col: 100}
 			}

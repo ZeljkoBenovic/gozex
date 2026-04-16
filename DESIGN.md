@@ -1,262 +1,307 @@
-# Design System Inspired by Sentry
+# Design System Inspired by Composio
 
 ## 1. Visual Theme & Atmosphere
 
-Sentry's website is a dark-mode-first developer tool interface that speaks the language of code editors and terminal windows. The entire aesthetic is rooted in deep purple-black backgrounds (`#1f1633`, `#150f23`) that evoke the late-night debugging sessions Sentry was built for. Against this inky canvas, a carefully curated set of purples, pinks, and a distinctive lime-green accent (`#c2ef4e`) create a visual system that feels simultaneously technical and vibrant.
+Composio's interface is a nocturnal command center — a dense, developer-focused darkness punctuated by electric cyan and deep cobalt signals. The entire experience is built on an almost-pure-black canvas (`#0f0f0f`) where content floats within barely-visible containment borders, creating the feeling of a high-tech control panel rather than a traditional marketing page. It's a site that whispers authority to developers who live in dark terminals.
 
-The typography pairing is deliberate: "Dammit Sans" appears at hero scale (88px, weight 700) as a display font with personality and attitude that matches Sentry's irreverent brand voice ("Code breaks. Fix it faster."), while Rubik serves as the workhorse UI font across all functional text — headings, body, buttons, captions, and navigation. Monaco provides the monospace layer for code snippets and technical content, completing the developer-tool trinity.
+The visual language leans heavily into the aesthetic of code editors and terminal windows. JetBrains Mono appears alongside the geometric precision of abcDiatype, reinforcing the message that this is a tool built *by* developers *for* developers. Decorative elements are restrained but impactful — subtle cyan-blue gradient glows emanate from cards and sections like bioluminescent organisms in deep water, while hard-offset shadows (`4px 4px`) on select elements add a raw, brutalist edge that prevents the design from feeling sterile.
 
-What makes Sentry distinctive is its embrace of the "dark IDE" aesthetic without feeling cold or sterile. Warm purple tones replace the typical cool grays of developer tools, and bold illustrative elements (3D characters, colorful product screenshots) punctuate the dark canvas. The button system uses a signature muted purple (`#79628c`) with inset shadows that creates a tactile, almost physical quality — buttons feel like they could be pressed into the surface.
+What makes Composio distinctive is its tension between extreme minimalism and strategic bursts of luminous color. The site never shouts — headings use tight line-heights (0.87) that compress text into dense, authoritative blocks. Color is rationed like a rare resource: white text for primary content, semi-transparent white (`rgba(255,255,255,0.5-0.6)`) for secondary, and brand blue (`#0007cd`) or electric cyan (`#00ffff`) reserved exclusively for interactive moments and accent glows.
 
 **Key Characteristics:**
-- Dark purple-black backgrounds (`#1f1633`, `#150f23`) — never pure black
-- Warm purple accent spectrum: from deep (`#362d59`) through mid (`#79628c`, `#6a5fc1`) to vibrant (`#422082`)
-- Lime-green accent (`#c2ef4e`) for high-visibility CTAs and highlights
-- Pink/coral accents (`#ffb287`, `#fa7faa`) for focus states and secondary highlights
-- "Dammit Sans" display font for brand personality at hero scale
-- Rubik as primary UI font with uppercase letter-spaced labels
-- Monaco monospace for code elements
-- Inset shadows on buttons creating tactile depth
-- Frosted glass effects with `blur(18px) saturate(180%)`
+- Pitch-black canvas with near-invisible white-border containment (4-12% opacity)
+- Dual-font identity: geometric sans-serif (abcDiatype) for content, monospace (JetBrains Mono) for technical credibility
+- Ultra-tight heading line-heights (0.87-1.0) creating compressed, impactful text blocks
+- Bioluminescent accent strategy — cyan and blue glows that feel like they're emitting light from within
+- Hard-offset brutalist shadows (`4px 4px`) on select interactive elements
+- Monochrome hierarchy with color used only at the highest-signal moments
+- Developer-terminal aesthetic that bridges marketing and documentation
 
 ## 2. Color Palette & Roles
 
-### Primary Brand
-- **Deep Purple** (`#1f1633`): Primary background, the defining color of the brand
-- **Darker Purple** (`#150f23`): Deeper sections, footer, secondary backgrounds
-- **Border Purple** (`#362d59`): Borders, dividers, subtle structural lines
+### Primary
+- **Composio Cobalt** (`#0007cd`): The core brand color — a deep, saturated blue used sparingly for high-priority interactive elements and brand moments. It anchors the identity with quiet intensity.
 
-### Accent Colors
-- **Sentry Purple** (`#6a5fc1`): Primary interactive color — links, hover states, focus rings
-- **Muted Purple** (`#79628c`): Button backgrounds, secondary interactive elements
-- **Deep Violet** (`#422082`): Select dropdowns, active states, high-emphasis surfaces
-- **Lime Green** (`#c2ef4e`): High-visibility accent, special links, badge highlights
-- **Coral** (`#ffb287`): Focus state backgrounds, warm accent
-- **Pink** (`#fa7faa`): Focus outlines, decorative accents
+### Secondary & Accent
+- **Electric Cyan** (`#00ffff`): The attention-grabbing accent — used at low opacity (`rgba(0,255,255,0.12)`) for glowing button backgrounds and card highlights. At full saturation, it serves as the energetic counterpoint to the dark canvas.
+- **Signal Blue** (`#0089ff` / `rgb(0,137,255)`): Used for select button borders and interactive focus states, bridging the gap between Cobalt and Cyan.
+- **Ocean Blue** (`#0096ff` / `rgb(0,150,255)`): Accent border color on CTA buttons, slightly warmer than Signal Blue.
 
-### Text Colors
-- **Pure White** (`#ffffff`): Primary text on dark backgrounds
-- **Light Gray** (`#e5e7eb`): Secondary text, muted content
-- **Code Yellow** (`#dcdcaa`): Syntax highlighting, code tokens
+### Surface & Background
+- **Void Black** (`#0f0f0f`): The primary page background — not pure black, but a hair warmer, reducing eye strain on dark displays.
+- **Pure Black** (`#000000`): Used for card interiors and deep-nested containers, creating a subtle depth distinction from the page background.
+- **Charcoal** (`#2c2c2c` / `rgb(44,44,44)`): Used for secondary button borders and divider lines on dark surfaces.
 
-### Surface & Overlay
-- **Glass White** (`rgba(255, 255, 255, 0.18)`): Frosted glass button backgrounds
-- **Glass Dark** (`rgba(54, 22, 107, 0.14)`): Hover overlay on glass elements
-- **Input White** (`#ffffff`): Form input backgrounds (light context)
-- **Input Border** (`#cfcfdb`): Form field borders
+### Neutrals & Text
+- **Pure White** (`#ffffff`): Primary heading and high-emphasis text color on dark surfaces.
+- **Muted Smoke** (`#444444`): De-emphasized body text, metadata, and tertiary content.
+- **Ghost White** (`rgba(255,255,255,0.6)`): Secondary body text and link labels — visible but deliberately receded.
+- **Whisper White** (`rgba(255,255,255,0.5)`): Tertiary button text and placeholder content.
+- **Phantom White** (`rgba(255,255,255,0.2)`): Subtle button backgrounds and deeply receded UI chrome.
 
-### Shadows
-- **Ambient Glow** (`rgba(22, 15, 36, 0.9) 0px 4px 4px 9px`): Deep purple ambient shadow
-- **Button Hover** (`rgba(0, 0, 0, 0.18) 0px 0.5rem 1.5rem`): Elevated hover state
-- **Card Shadow** (`rgba(0, 0, 0, 0.1) 0px 10px 15px -3px`): Standard card elevation
-- **Inset Button** (`rgba(0, 0, 0, 0.1) 0px 1px 3px 0px inset`): Tactile pressed effect
+### Semantic & Accent
+- **Border Mist 12** (`rgba(255,255,255,0.12)`): Highest-opacity border treatment — used for prominent card edges and content separators.
+- **Border Mist 10** (`rgba(255,255,255,0.10)`): Standard container borders on dark surfaces.
+- **Border Mist 08** (`rgba(255,255,255,0.08)`): Subtle section dividers and secondary card edges.
+- **Border Mist 06** (`rgba(255,255,255,0.06)`): Near-invisible containment borders for background groupings.
+- **Border Mist 04** (`rgba(255,255,255,0.04)`): The faintest border — used for atmospheric separation only.
+- **Light Border** (`#e0e0e0` / `rgb(224,224,224)`): Reserved for light-surface contexts (rare on this site).
+
+### Gradient System
+- **Cyan Glow**: Radial gradients using `#00ffff` at very low opacity, creating bioluminescent halos behind cards and feature sections.
+- **Blue-to-Black Fade**: Linear gradients from Composio Cobalt (`#0007cd`) fading into Void Black (`#0f0f0f`), used in hero backgrounds and section transitions.
+- **White Fog**: Bottom-of-page gradient transitioning from dark to a diffused white/gray, creating an atmospheric "horizon line" effect near the footer.
 
 ## 3. Typography Rules
 
-### Font Families
-- **Display**: `Dammit Sans` — brand personality font for hero headings
-- **Primary UI**: `Rubik`, with fallbacks: `-apple-system, system-ui, Segoe UI, Helvetica, Arial`
-- **Monospace**: `Monaco`, with fallbacks: `Menlo, Ubuntu Mono`
+### Font Family
+- **Primary**: `abcDiatype`, with fallbacks: `abcDiatype Fallback, ui-sans-serif, system-ui, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji`
+- **Monospace**: `JetBrains Mono`, with fallbacks: `JetBrains Mono Fallback, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New`
+- **System Monospace** (fallback): `Menlo`, `monospace` for smallest inline code
 
 ### Hierarchy
 
 | Role | Font | Size | Weight | Line Height | Letter Spacing | Notes |
 |------|------|------|--------|-------------|----------------|-------|
-| Display Hero | Dammit Sans | 88px (5.50rem) | 700 | 1.20 (tight) | normal | Maximum impact, brand voice |
-| Display Secondary | Dammit Sans | 60px (3.75rem) | 500 | 1.10 (tight) | normal | Secondary hero text |
-| Section Heading | Rubik | 30px (1.88rem) | 400 | 1.20 (tight) | normal | Major section titles |
-| Sub-heading | Rubik | 27px (1.69rem) | 500 | 1.25 (tight) | normal | Feature section headers |
-| Card Title | Rubik | 24px (1.50rem) | 500 | 1.25 (tight) | normal | Card and block headings |
-| Feature Title | Rubik | 20px (1.25rem) | 600 | 1.25 (tight) | normal | Emphasized feature names |
-| Body | Rubik | 16px (1.00rem) | 400 | 1.50 | normal | Standard body text |
-| Body Emphasis | Rubik | 16px (1.00rem) | 500–600 | 1.50 | normal | Bold body, nav items |
-| Nav Label | Rubik | 15px (0.94rem) | 500 | 1.40 | normal | Navigation links |
-| Uppercase Label | Rubik | 15px (0.94rem) | 500 | 1.25 (tight) | normal | `text-transform: uppercase` |
-| Button Text | Rubik | 14px (0.88rem) | 500–700 | 1.14–1.29 (tight) | 0.2px | `text-transform: uppercase` |
-| Caption | Rubik | 14px (0.88rem) | 500–700 | 1.00–1.43 | 0.2px | Often uppercase |
-| Small Caption | Rubik | 12px (0.75rem) | 600 | 2.00 (relaxed) | normal | Subtle annotations |
-| Micro Label | Rubik | 10px (0.63rem) | 600 | 1.80 (relaxed) | 0.25px | `text-transform: uppercase` |
-| Code | Monaco | 16px (1.00rem) | 400–700 | 1.50 | normal | Code blocks, technical text |
+| Display / Hero | abcDiatype | 64px (4rem) | 400 | 0.87 (ultra-tight) | normal | Massive, compressed headings |
+| Section Heading | abcDiatype | 48px (3rem) | 400 | 1.00 (tight) | normal | Major feature section titles |
+| Sub-heading Large | abcDiatype | 40px (2.5rem) | 400 | 1.00 (tight) | normal | Secondary section markers |
+| Sub-heading | abcDiatype | 28px (1.75rem) | 400 | 1.20 (tight) | normal | Card titles, feature names |
+| Card Title | abcDiatype | 24px (1.5rem) | 500 | 1.20 (tight) | normal | Medium-emphasis card headings |
+| Feature Label | abcDiatype | 20px (1.25rem) | 500 | 1.20 (tight) | normal | Smaller card titles, labels |
+| Body Large | abcDiatype | 18px (1.125rem) | 400 | 1.20 (tight) | normal | Intro paragraphs |
+| Body / Button | abcDiatype | 16px (1rem) | 400 | 1.50 | normal | Standard body text, nav links, buttons |
+| Body Small | abcDiatype | 15px (0.94rem) | 400 | 1.63 (relaxed) | normal | Longer-form body text |
+| Caption | abcDiatype | 14px (0.875rem) | 400 | 1.63 (relaxed) | normal | Descriptions, metadata |
+| Label | abcDiatype | 13px (0.81rem) | 500 | 1.50 | normal | UI labels, badges |
+| Tag / Overline | abcDiatype | 12px (0.75rem) | 500 | 1.00 (tight) | 0.3px | Uppercase overline labels |
+| Micro | abcDiatype | 12px (0.75rem) | 400 | 1.00 (tight) | 0.3px | Smallest sans-serif text |
+| Code Body | JetBrains Mono | 16px (1rem) | 400 | 1.50 | -0.32px | Inline code, terminal output |
+| Code Small | JetBrains Mono | 14px (0.875rem) | 400 | 1.50 | -0.28px | Code snippets, technical labels |
+| Code Caption | JetBrains Mono | 12px (0.75rem) | 400 | 1.50 | -0.28px | Small code references |
+| Code Overline | JetBrains Mono | 14px (0.875rem) | 400 | 1.43 | 0.7px | Uppercase technical labels |
+| Code Micro | JetBrains Mono | 11px (0.69rem) | 400 | 1.33 | 0.55px | Tiny uppercase code tags |
+| Code Nano | JetBrains Mono | 9-10px | 400 | 1.33 | 0.45-0.5px | Smallest monospace text |
 
 ### Principles
-- **Dual personality**: Dammit Sans brings irreverent brand character at display scale; Rubik provides clean professionalism for everything functional.
-- **Uppercase as system**: Buttons, captions, labels, and micro-text all use `text-transform: uppercase` with subtle letter-spacing (0.2px–0.25px), creating a systematic "technical label" pattern throughout.
-- **Weight stratification**: Rubik uses 400 (body), 500 (emphasis/nav), 600 (titles/strong), 700 (buttons/CTAs) — a clean four-tier weight system.
-- **Tight headings, relaxed body**: All headings use 1.10–1.25 line-height; body uses 1.50; small captions expand to 2.00 for readability at tiny sizes.
+- **Compression creates authority**: Heading line-heights are drastically tight (0.87-1.0), making large text feel dense and commanding rather than airy and decorative.
+- **Dual personality**: abcDiatype carries the marketing voice — geometric, precise, friendly. JetBrains Mono carries the technical voice — credible, functional, familiar to developers.
+- **Weight restraint**: Almost everything is weight 400 (regular). Weight 500 (medium) is reserved for small labels, badges, and select card titles. Weight 700 (bold) appears only in microscopic system-monospace contexts.
+- **Negative letter-spacing on code**: JetBrains Mono uses negative letter-spacing (-0.28px to -0.98px) for dense, compact code blocks that feel like a real IDE.
+- **Uppercase is earned**: The `uppercase` + `letter-spacing` treatment is reserved exclusively for tiny overline labels and technical tags — never for headings.
 
 ## 4. Component Stylings
 
 ### Buttons
 
-**Primary Muted Purple**
-- Background: `#79628c` (rgb(121, 98, 140))
-- Text: `#ffffff`, uppercase, 14px, weight 500–700, letter-spacing 0.2px
-- Border: `1px solid #584674`
-- Radius: 13px
-- Shadow: `rgba(0, 0, 0, 0.1) 0px 1px 3px 0px inset` (tactile inset)
-- Hover: elevated shadow `rgba(0, 0, 0, 0.18) 0px 0.5rem 1.5rem`
+**Primary CTA (White Fill)**
+- Background: Pure White (`#ffffff`)
+- Text: Near Black (`oklch(0.145 0 0)`)
+- Padding: comfortable (8px 24px)
+- Border: none
+- Radius: subtly rounded (likely 4px based on token scale)
+- Hover: likely subtle opacity reduction or slight gray shift
 
-**Glass White**
-- Background: `rgba(255, 255, 255, 0.18)` (frosted glass)
-- Text: `#ffffff`
-- Padding: 8px
-- Radius: 12px (left-aligned variant: `12px 0px 0px 12px`)
-- Shadow: `rgba(0, 0, 0, 0.08) 0px 2px 8px`
-- Hover background: `rgba(54, 22, 107, 0.14)`
-- Use: Secondary actions on dark surfaces
+**Cyan Accent CTA**
+- Background: Electric Cyan at 12% opacity (`rgba(0,255,255,0.12)`)
+- Text: Near Black (`oklch(0.145 0 0)`)
+- Padding: comfortable (8px 24px)
+- Border: thin solid Ocean Blue (`1px solid rgb(0,150,255)`)
+- Radius: subtly rounded (4px)
+- Creates a "glowing from within" effect on dark backgrounds
 
-**White Solid**
-- Background: `#ffffff`
-- Text: `#1f1633`
-- Padding: 12px 16px
-- Radius: 8px
-- Hover: background transitions to `#6a5fc1`, text to white
-- Focus: background `#ffb287` (coral), outline `rgb(106, 95, 193) solid 0.125rem`
-- Use: High-visibility CTA on dark backgrounds
+**Ghost / Outline (Signal Blue)**
+- Background: transparent
+- Text: Near Black (`oklch(0.145 0 0)`)
+- Padding: balanced (10px)
+- Border: thin solid Signal Blue (`1px solid rgb(0,137,255)`)
+- Hover: likely fill or border color shift
 
-**Deep Violet (Select/Dropdown)**
-- Background: `#422082`
-- Text: `#ffffff`
-- Padding: 8px 16px
-- Radius: 8px
+**Ghost / Outline (Charcoal)**
+- Background: transparent
+- Text: Near Black (`oklch(0.145 0 0)`)
+- Padding: balanced (10px)
+- Border: thin solid Charcoal (`1px solid rgb(44,44,44)`)
+- For secondary/tertiary actions on dark surfaces
 
-### Inputs
-
-**Text Input**
-- Background: `#ffffff`
-- Text: `#1f1633`
-- Border: `1px solid #cfcfdb`
-- Padding: 8px 12px
-- Radius: 6px
-- Focus: border-color stays `#cfcfdb`, shadow `rgba(0, 0, 0, 0.15) 0px 2px 10px inset`
-
-### Links
-- **Default on dark**: `#ffffff`, underline decoration
-- **Hover**: color transitions to `#6a5fc1` (Sentry Purple)
-- **Purple links**: `#6a5fc1` default, hover underline
-- **Lime accent links**: `#c2ef4e` default, hover to `#6a5fc1`
-- **Dark context links**: `#362d59`, hover to `#ffffff`
+**Phantom Button**
+- Background: Phantom White (`rgba(255,255,255,0.2)`)
+- Text: Whisper White (`rgba(255,255,255,0.5)`)
+- No visible border
+- Used for deeply de-emphasized actions
 
 ### Cards & Containers
-- Background: semi-transparent or dark purple surfaces
-- Radius: 8px–12px
-- Shadow: `rgba(0, 0, 0, 0.1) 0px 10px 15px -3px`
-- Backdrop filter: `blur(18px) saturate(180%)` for glass effects
+- Background: Pure Black (`#000000`) or transparent
+- Border: white at very low opacity, ranging from Border Mist 04 (`rgba(255,255,255,0.04)`) to Border Mist 12 (`rgba(255,255,255,0.12)`) depending on prominence
+- Radius: barely rounded corners (2px for inline elements, 4px for content cards)
+- Shadow: select cards use the hard-offset brutalist shadow (`rgba(0,0,0,0.15) 4px 4px 0px 0px`) — a distinctive design choice that adds raw depth
+- Elevation shadow: deeper containers use soft diffuse shadow (`rgba(0,0,0,0.5) 0px 8px 32px`)
+- Hover behavior: likely subtle border opacity increase or faint glow effect
+
+### Inputs & Forms
+- No explicit input token data extracted — inputs likely follow the dark-surface pattern with:
+  - Background: transparent or Pure Black
+  - Border: Border Mist 10 (`rgba(255,255,255,0.10)`)
+  - Focus: border shifts to Signal Blue (`#0089ff`) or Electric Cyan
+  - Text: Pure White with Ghost White placeholder
 
 ### Navigation
-- Dark transparent header over hero content
-- Rubik 15px weight 500 for nav links
-- White text, hover to Sentry Purple (`#6a5fc1`)
-- Uppercase labels with 0.2px letter-spacing for categories
-- Mobile: hamburger menu, full-width expanded
+- Sticky top nav bar on dark/black background
+- Logo (white SVG): Composio wordmark on the left
+- Nav links: Pure White (`#ffffff`) at standard body size (16px, abcDiatype)
+- CTA button in the nav: White Fill Primary style
+- Mobile: collapses to hamburger menu, single-column layout
+- Subtle bottom border on nav (Border Mist 06-08)
+
+### Image Treatment
+- Dark-themed product screenshots and UI mockups dominate
+- Images sit within bordered containers matching the card system
+- Blue/cyan gradient glows behind or beneath feature images
+- No visible border-radius on images beyond container rounding (4px)
+- Full-bleed within their card containers
+
+### Distinctive Components
+
+**Stats/Metrics Display**
+- Large monospace numbers (JetBrains Mono) — "10k+" style
+- Tight layout with subtle label text beneath
+
+**Code Blocks / Terminal Previews**
+- Dark containers with JetBrains Mono
+- Syntax-highlighted content
+- Subtle bordered containers (Border Mist 10)
+
+**Integration/Partner Logos Grid**
+- Grid layout of tool logos on dark surface
+- Contained within bordered card
+- Demonstrates ecosystem breadth
+
+**"COMPOSIO" Brand Display**
+- Oversized brand typography — likely the largest text on the page
+- Used as a section divider/brand statement
+- Stark white on black
 
 ## 5. Layout Principles
 
 ### Spacing System
 - Base unit: 8px
-- Scale: 1px, 2px, 4px, 5px, 6px, 8px, 12px, 16px, 24px, 32px, 40px, 44px, 45px, 47px
+- Scale: 1px, 2px, 4px, 6px, 8px, 10px, 12px, 14px, 16px, 18px, 20px, 24px, 30px, 32px, 40px
+- Component padding: typically 10px (buttons) to 24px (CTA buttons horizontal)
+- Section padding: generous vertical spacing (estimated 80-120px between major sections)
+- Card internal padding: approximately 24-32px
 
 ### Grid & Container
-- Max content width: 1152px (XL breakpoint)
-- Responsive padding: 2rem (mobile) → 4rem (tablet+)
-- Content centered within container
-- Full-width dark sections with contained inner content
-
-### Breakpoints
-| Name | Width | Key Changes |
-|------|-------|-------------|
-| Mobile | < 576px | Single column, stacked layout |
-| Small Tablet | 576–640px | Minor width adjustments |
-| Tablet | 640–768px | 2-column begins |
-| Small Desktop | 768–992px | Full nav visible |
-| Desktop | 992–1152px | Standard layout |
-| Large Desktop | 1152–1440px | Max-width content |
+- Max container width: approximately 1200px, centered
+- Content sections use single-column or 2-3 column grids for feature cards
+- Hero: centered single-column with maximum impact
+- Feature sections: asymmetric layouts mixing text blocks with product screenshots
 
 ### Whitespace Philosophy
-- **Dark breathing room**: Generous vertical spacing between sections (64px–80px+) lets the dark background serve as a visual rest.
-- **Content islands**: Feature sections are self-contained blocks floating in the dark purple sea, each with its own internal spacing rhythm.
-- **Asymmetric padding**: Buttons use asymmetric padding patterns (12px 16px, 8px 12px) that feel organic rather than rigid.
+- **Breathing room between sections**: Large vertical gaps create distinct "chapters" in the page scroll.
+- **Dense within components**: Cards and text blocks are internally compact (tight line-heights, minimal internal padding), creating focused information nodes.
+- **Contrast-driven separation**: Rather than relying solely on whitespace, Composio uses border opacity differences and subtle background shifts to delineate content zones.
 
 ### Border Radius Scale
-- Minimal (6px): Form inputs, small interactive elements
-- Standard (8px): Buttons, cards, containers
-- Comfortable (10px–12px): Larger containers, glass panels
-- Rounded (13px): Primary muted buttons
-- Pill (18px): Image containers, badges
+- Nearly squared (2px): Inline code spans, small tags, pre blocks — the sharpest treatment, conveying technical precision
+- Subtly rounded (4px): Content cards, images, standard containers — the workhorse radius
+- Pill-shaped (37px): Select buttons and badges — creates a softer, more approachable feel for key CTAs
+- Full round (9999px+): Circular elements, avatar-like containers, decorative dots
 
 ## 6. Depth & Elevation
 
 | Level | Treatment | Use |
 |-------|-----------|-----|
-| Sunken (Level -1) | Inset shadow `rgba(0, 0, 0, 0.1) 0px 1px 3px inset` | Primary buttons (tactile pressed feel) |
-| Flat (Level 0) | No shadow | Default surfaces, dark backgrounds |
-| Surface (Level 1) | `rgba(0, 0, 0, 0.08) 0px 2px 8px` | Glass buttons, subtle cards |
-| Elevated (Level 2) | `rgba(0, 0, 0, 0.1) 0px 10px 15px -3px` | Cards, floating panels |
-| Prominent (Level 3) | `rgba(0, 0, 0, 0.18) 0px 0.5rem 1.5rem` | Hover states, modals |
-| Ambient (Level 4) | `rgba(22, 15, 36, 0.9) 0px 4px 4px 9px` | Deep purple ambient glow around hero |
+| Flat (Level 0) | No shadow, no border | Page background, inline text |
+| Contained (Level 1) | Border Mist 04-08, no shadow | Background groupings, subtle sections |
+| Card (Level 2) | Border Mist 10-12, no shadow | Standard content cards, code blocks |
+| Brutalist (Level 3) | Hard offset shadow (`4px 4px`, 15% black) | Select interactive cards, distinctive feature highlights |
+| Floating (Level 4) | Soft diffuse shadow (`0px 8px 32px`, 50% black) | Modals, overlays, deeply elevated content |
 
-**Shadow Philosophy**: Sentry uses a unique combination of inset shadows (buttons feel pressed INTO the surface) and ambient glows (content radiates from the dark background). The deep purple ambient shadow (`rgba(22, 15, 36, 0.9)`) is the signature — it creates a bioluminescent quality where content seems to emit its own purple-tinted light.
+**Shadow Philosophy**: Composio uses shadows sparingly and with deliberate contrast. The hard-offset brutalist shadow is the signature — it breaks the sleek darkness with a raw, almost retro-computing feel. The soft diffuse shadow is reserved for truly floating elements. Most depth is communicated through border opacity gradations rather than shadows.
+
+### Decorative Depth
+- **Cyan Glow Halos**: Radial gradient halos using Electric Cyan at low opacity behind feature cards and images. Creates a "screen glow" effect as if the UI elements are emitting light.
+- **Blue-Black Gradient Washes**: Linear gradients from Composio Cobalt to Void Black used as section backgrounds, adding subtle color temperature shifts.
+- **White Fog Horizon**: A gradient from dark to diffused white/gray at the bottom of the page, creating an atmospheric "dawn" effect before the footer.
 
 ## 7. Do's and Don'ts
 
 ### Do
-- Use deep purple backgrounds (`#1f1633`, `#150f23`) — never pure black (`#000000`)
-- Apply inset shadows on primary buttons for the tactile pressed effect
-- Use Dammit Sans ONLY for hero/display headings — Rubik for everything else
-- Apply `text-transform: uppercase` with `letter-spacing: 0.2px` on buttons and labels
-- Use the lime-green accent (`#c2ef4e`) sparingly for maximum impact
-- Employ frosted glass effects (`blur(18px) saturate(180%)`) for layered surfaces
-- Maintain the warm purple shadow tones — shadows should feel purple-tinted, not neutral gray
-- Use Rubik's 4-tier weight system: 400 (body), 500 (nav/emphasis), 600 (titles), 700 (CTAs)
+- Use Void Black (`#0f0f0f`) as the primary page background — never pure white for main surfaces
+- Keep heading line-heights ultra-tight (0.87-1.0) for compressed, authoritative text blocks
+- Use white-opacity borders (4-12%) for containment — they're more important than shadows here
+- Reserve Electric Cyan (`#00ffff`) for high-signal moments only — CTAs, glows, interactive accents
+- Pair abcDiatype with JetBrains Mono to reinforce the developer-tool identity
+- Use the hard-offset shadow (`4px 4px`) intentionally on select elements for brutalist personality
+- Keep button text dark (`oklch(0.145 0 0)`) even on the darkest backgrounds — buttons carry their own surface
+- Layer opacity-based borders to create subtle depth without shadows
+- Use uppercase + letter-spacing only for tiny overline labels (12px or smaller)
 
 ### Don't
-- Don't use pure black (`#000000`) for backgrounds — always use the warm purple-blacks
-- Don't apply Dammit Sans to body text or UI elements — it's display-only
-- Don't use standard gray (`#666`, `#999`) for borders — use purple-tinted grays (`#362d59`, `#584674`)
-- Don't drop the uppercase treatment on buttons — it's a system-wide pattern
-- Don't use sharp corners (0px radius) — minimum 6px for all interactive elements
-- Don't mix the lime-green accent with the coral/pink accents in the same component
-- Don't use flat (non-inset) shadows on primary buttons — the tactile quality is signature
-- Don't forget letter-spacing on uppercase text — 0.2px minimum
+- Don't use bright backgrounds or light surfaces as primary containers
+- Don't apply heavy shadows everywhere — depth comes from border opacity, not box-shadow
+- Don't use Composio Cobalt (`#0007cd`) as a text color — it's too dark on dark and too saturated on light
+- Don't increase heading line-heights beyond 1.2 — the compressed feel is core to the identity
+- Don't use bold (700) weight for body or heading text — 400-500 is the ceiling
+- Don't mix warm colors — the palette is strictly cool (blue, cyan, white, black)
+- Don't use border-radius larger than 4px on content cards — the precision of near-square corners is intentional
+- Don't place Electric Cyan at full opacity on large surfaces — it's an accent, used at 12% max for backgrounds
+- Don't use decorative serif or handwritten fonts — the entire identity is geometric sans + monospace
+- Don't skip the monospace font for technical content — JetBrains Mono is not decorative, it's a credibility signal
 
 ## 8. Responsive Behavior
 
 ### Breakpoints
 | Name | Width | Key Changes |
 |------|-------|-------------|
-| Mobile | <576px | Single column, hamburger nav, stacked CTAs |
-| Tablet | 576–768px | 2-column feature grids begin |
-| Small Desktop | 768–992px | Full navigation, side-by-side layouts |
-| Desktop | 992–1152px | Max-width container, full layout |
-| Large | >1152px | Content max-width maintained, generous margins |
+| Mobile | <768px | Single column, hamburger nav, full-width cards, reduced section padding, hero text scales down to ~28-40px |
+| Tablet | 768-1024px | 2-column grid for cards, condensed nav, slightly reduced hero text |
+| Desktop | 1024-1440px | Full multi-column layout, expanded nav with all links visible, large hero typography (64px) |
+| Large Desktop | >1440px | Max-width container centered, generous horizontal margins |
+
+### Touch Targets
+- Minimum touch target: 44x44px for all interactive elements
+- Buttons use comfortable padding (8px 24px minimum) ensuring adequate touch area
+- Nav links spaced with sufficient gap for thumb navigation
 
 ### Collapsing Strategy
-- Hero text: 88px Dammit Sans → 60px → mobile scales
-- Navigation: horizontal → hamburger with slide-out
-- Feature sections: side-by-side → stacked cards
-- Buttons: inline → full-width stacked on mobile
-- Container padding: 4rem → 2rem
+- **Navigation**: Full horizontal nav on desktop collapses to hamburger on mobile
+- **Feature grids**: 3-column → 2-column → single-column stacking
+- **Hero text**: 64px → 40px → 28px progressive scaling
+- **Section padding**: Reduces proportionally but maintains generous vertical rhythm
+- **Cards**: Stack vertically on mobile with full-width treatment
+- **Code blocks**: Horizontal scroll on smaller viewports rather than wrapping
+
+### Image Behavior
+- Product screenshots scale proportionally within their containers
+- Dark-themed images maintain contrast on the dark background at all sizes
+- Gradient glow effects scale with container size
+- No visible art direction changes between breakpoints — same crops, proportional scaling
 
 ## 9. Agent Prompt Guide
 
 ### Quick Color Reference
-- Background: `#1f1633` (primary), `#150f23` (deeper)
-- Text: `#ffffff` (primary), `#e5e7eb` (secondary)
-- Interactive: `#6a5fc1` (links/hover), `#79628c` (buttons)
-- Accent: `#c2ef4e` (lime highlight), `#ffb287` (coral focus)
-- Border: `#362d59` (dark), `#cfcfdb` (light context)
+- Primary CTA: "Pure White (#ffffff)"
+- Page Background: "Void Black (#0f0f0f)"
+- Brand Accent: "Composio Cobalt (#0007cd)"
+- Glow Accent: "Electric Cyan (#00ffff)"
+- Heading Text: "Pure White (#ffffff)"
+- Body Text: "Ghost White (rgba(255,255,255,0.6))"
+- Card Border: "Border Mist 10 (rgba(255,255,255,0.10))"
+- Button Border: "Signal Blue (#0089ff)"
 
 ### Example Component Prompts
-- "Create a hero section on deep purple background (#1f1633). Headline at 88px Dammit Sans weight 700, line-height 1.20, white text. Sub-text at 16px Rubik weight 400, line-height 1.50. White solid CTA button (8px radius, 12px 16px padding), hover transitions to #6a5fc1."
-- "Design a navigation bar: transparent over dark background. Rubik 15px weight 500, white text. Uppercase category labels with 0.2px letter-spacing. Hover color #6a5fc1."
-- "Build a primary button: background #79628c, border 1px solid #584674, inset shadow rgba(0,0,0,0.1) 0px 1px 3px, white uppercase text at 14px Rubik weight 700, letter-spacing 0.2px, radius 13px. Hover: shadow rgba(0,0,0,0.18) 0px 0.5rem 1.5rem."
-- "Create a glass card panel: background rgba(255,255,255,0.18), backdrop-filter blur(18px) saturate(180%), radius 12px. White text content inside."
-- "Design a feature section: #150f23 background, 24px Rubik weight 500 heading, 16px Rubik weight 400 body text. 14px uppercase lime-green (#c2ef4e) label above heading."
+- "Create a feature card with a near-black background (#000000), barely visible white border at 10% opacity, subtly rounded corners (4px), and a hard-offset shadow (4px right, 4px down, 15% black). Use Pure White for the title in abcDiatype at 24px weight 500, and Ghost White (60% opacity) for the description at 16px."
+- "Design a primary CTA button with a solid white background, near-black text, comfortable padding (8px vertical, 24px horizontal), and subtly rounded corners. Place it next to a secondary button with transparent background, Signal Blue border, and matching padding."
+- "Build a hero section on Void Black (#0f0f0f) with a massive heading at 64px, line-height 0.87, in abcDiatype. Center the text. Add a subtle blue-to-black gradient glow behind the content. Include a white CTA button and a cyan-accented secondary button below."
+- "Create a code snippet display using JetBrains Mono at 14px with -0.28px letter-spacing on a black background. Add a Border Mist 10 border (rgba(255,255,255,0.10)) and 4px radius. Show syntax-highlighted content with white and cyan text."
+- "Design a navigation bar on Void Black with the Composio wordmark in white on the left, 4-5 nav links in white abcDiatype at 16px, and a white-fill CTA button on the right. Add a Border Mist 06 bottom border."
 
 ### Iteration Guide
-1. Always start with the dark purple background — the color palette is built FOR dark mode
-2. Use inset shadows on buttons, ambient purple glows on hero sections
-3. Uppercase + letter-spacing is the systematic pattern for labels, buttons, and captions
-4. Lime green (#c2ef4e) is the "pop" color — use once per section maximum
-5. Frosted glass for overlaid panels, solid purple for primary surfaces
-6. Rubik handles 90% of typography — Dammit Sans is hero-only
+When refining existing screens generated with this design system:
+1. Focus on ONE component at a time
+2. Reference specific color names and hex codes from this document — "use Ghost White (rgba(255,255,255,0.6))" not "make it lighter"
+3. Use natural language descriptions — "make the border barely visible" = Border Mist 04-06
+4. Describe the desired "feel" alongside specific measurements — "compressed and authoritative heading at 48px with line-height 1.0"
+5. For glow effects, specify "Electric Cyan at 12% opacity as a radial gradient behind the element"
+6. Always specify which font — abcDiatype for marketing, JetBrains Mono for technical/code content

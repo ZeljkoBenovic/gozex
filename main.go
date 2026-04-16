@@ -66,7 +66,7 @@ func main() {
 			Date:     info.ModTime(),
 			Slug:     postSlug,
 			FilePath: postFilePath,
-			URL:      strings.TrimPrefix(postURL, "public"),
+			URL:      strings.TrimPrefix(postURL, "public") + "/",
 		})
 
 		return nil
@@ -158,7 +158,7 @@ func main() {
 			log.Fatalf("failed to convert markdown to HTML: %v", err)
 		}
 
-		postURL := siteURL + post.URL + "/"
+		postURL := siteURL + post.URL
 		postDesc := extractDescription(string(postContent))
 		postSEO := blog.SEOMeta{
 			Title:        post.Title + " – " + data.Name,
@@ -361,7 +361,7 @@ func generateSitemap(rootFolder, siteURL string, blogPosts []blog.Post) {
 	writeURL(siteURL+"/blog/", "", "weekly", "0.8")
 
 	for _, p := range blogPosts {
-		postURL := siteURL + p.URL + "/"
+		postURL := siteURL + p.URL
 		writeURL(postURL, p.Date.Format("2006-01-02"), "yearly", "0.6")
 	}
 

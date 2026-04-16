@@ -18,24 +18,24 @@ templ Body(b Blog) {
 
         <!-- HERO -->
         <section class="hero">
-            <div class="hero-avatar">
+            <div class="hero-top">
                 <img src={"https://unavatar.io/github/" + b.GitHubName} alt={b.Name + " Avatar"} class="avatar" />
+                <div class="hero-text">
+                    <h1 class="glitch" data-text={b.Name}>{b.Name}</h1>
+                    <p class="hero-title">{b.Title}</p>
+                </div>
             </div>
-            <div class="hero-text">
-                <h1 class="glitch" data-text={b.Name}>{b.Name}</h1>
-                <p class="hero-title">{b.Title}</p>
-                <p class="bio">{b.Bio}</p>
-                <div class="role-chips">
-                    for _, role := range b.Roles {
-                        <span class="chip">{role}</span>
-                    }
-                </div>
-                <div class="hero-links">
-                    <a href={templ.SafeURL(b.GitHubURL)} class="hero-link" target="_blank" rel="noopener noreferrer">GitHub</a>
-                    <a href={templ.SafeURL(b.LinkedInURL)} class="hero-link" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-                    <a href="/blog" class="hero-link">Blog</a>
-                    <a href={"mailto:" + b.Email} class="hero-link">Email</a>
-                </div>
+            <p class="bio">{b.Bio}</p>
+            <div class="role-chips">
+                for _, role := range b.Roles {
+                    <span class="chip">{role}</span>
+                }
+            </div>
+            <div class="hero-links">
+                <a href={templ.SafeURL(b.GitHubURL)} class="hero-link" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a href={templ.SafeURL(b.LinkedInURL)} class="hero-link" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                <a href="/blog" class="hero-link">Blog</a>
+                <a href={"mailto:" + b.Email} class="hero-link">Email</a>
             </div>
         </section>
 
