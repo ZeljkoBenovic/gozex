@@ -1,11 +1,9 @@
 package posts
 
 import (
-    "path"
     "io"
     "context"
     "time"
-    "github.com/gosimple/slug"
     "github.com/ZeljkoBenovic/gozex/templ/blog"
 )
 
@@ -32,7 +30,7 @@ templ Body(b blog.Blog) {
         <h1 class="blog-header">Posts</h1>
         <div class="blog-list">
         for _, p := range b.Posts {
-            <a href={ templ.SafeURL(path.Join(p.Date.Format("2006/01/02"), slug.Make(p.Title)) + "/") } class="blog-link">
+            <a href={ templ.SafeURL(p.URL) } class="blog-link">
                 <span>{ p.Title }</span>
                 <span class="post-arrow">→</span>
             </a>
