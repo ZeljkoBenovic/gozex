@@ -1,58 +1,186 @@
 package posts
 
 import (
-    "io"
     "context"
+    "io"
+    "strings"
     "time"
     "github.com/ZeljkoBenovic/gozex/templ/blog"
 )
 
-templ navBar(title string) {
-    <nav class="topnav">
-        <div class="topnav-inner">
-            <a href="/">Home</a>
-            <span class="sep">/</span>
-            if title == "" {
-                <span class="crumb">Blog</span>
-            } else {
-                <a href="/blog">Blog</a>
-                <span class="sep">/</span>
-                <span class="crumb">{ title }</span>
-            }
-        </div>
-    </nav>
+func uniquePostTags(posts []blog.Post) []string {
+    seen := make(map[string]bool)
+    tags := []string{"all"}
+    for _, p := range posts {
+        if p.Tag != "" && !seen[p.Tag] {
+            seen[p.Tag] = true
+            tags = append(tags, p.Tag)
+        }
+    }
+    return tags
+}
+
+func ageStr(d time.Time) string {
+    now := time.Now()
+    diff := now.Sub(d)
+    days := int(diff.Hours() / 24)
+    if days < 1 {
+        return "today"
+    }
+    if days < 365 {
+        return strings.TrimSpace(strings.TrimRight(d.Format("Jan 2"), "") + "")
+    }
+    return d.Format("Jan 2006")
 }
 
 templ Body(b blog.Blog) {
-    <body>
-    @navBar("")
-    <div class="container" style="padding: 0 1rem 2rem;">
-        <h1 class="blog-header">Posts</h1>
-        <div class="blog-list">
-        for _, p := range b.Posts {
-            <a href={ templ.SafeURL(p.URL) } class="blog-link">
-                <span>{ p.Title }</span>
-                <span class="post-arrow">→</span>
-            </a>
-        }
+<body>
+@blog.Nav("blog", b)
+<div class="container page-enter">
+<div class="blog-page">
+
+    <div class="blog-page-header">
+        <div class="page-mono-label">$ kubectl get posts --all-namespaces</div>
+        <h1 class="page-h1">notes from<br/><span style="color:var(--accent)">the cluster</span></h1>
+    </div>
+
+    <div class="blog-toolbar">
+        <div class="search-wrap">
+            <span class="search-label">grep</span>
+            <input class="search-input" id="blog-search" placeholder="filter posts..." type="text"/>
+        </div>
+        <div class="tag-pills" id="tag-pills">
+            for i, tag := range uniquePostTags(b.Posts) {
+                if i == 0 {
+                    <button class="tag-pill tag-pill-active" data-tag={ tag }>{ tag }</button>
+                } else {
+                    <button class="tag-pill" data-tag={ tag }>{ tag }</button>
+                }
+            }
         </div>
     </div>
-    </body>
+
+    <div class="blog-table">
+        <div class="blog-table-header">
+            <div>age</div>
+            <div>name</div>
+            <div>kind</div>
+            <div>read</div>
+        </div>
+        <div id="blog-rows">
+            for _, p := range b.Posts {
+                <a href={ templ.SafeURL(p.URL) } class="blog-row"
+                   data-title={ strings.ToLower(p.Title) }
+                   data-tag={ p.Tag }>
+                    <div class="blog-age">{ p.Date.Format("2006-01-02") }</div>
+                    <div class="blog-title">{ p.Title }</div>
+                    <div><span class="chip">{ p.Tag }</span></div>
+                    <div class="blog-read">{ p.ReadTime }</div>
+                </a>
+            }
+        </div>
+        <div id="blog-empty" class="blog-empty" style="display:none">
+            $ no resources found matching &quot;<span class="blog-empty-query" id="empty-query"></span>&quot;
+        </div>
+    </div>
+
+</div>
+</div>
+@blog.Footer(b)
+<script>
+(function() {
+    const rows = document.querySelectorAll('.blog-row');
+    const searchInput = document.getElementById('blog-search');
+    const tagPills = document.querySelectorAll('.tag-pill');
+    const emptyState = document.getElementById('blog-empty');
+    const emptyQuery = document.getElementById('empty-query');
+    let activeTag = 'all';
+
+    function filterRows() {
+        const q = (searchInput?.value || '').toLowerCase();
+        let visible = 0;
+        rows.forEach(row => {
+            const title = row.dataset.title || '';
+            const tag   = row.dataset.tag || '';
+            const matchSearch = !q || title.includes(q);
+            const matchTag    = activeTag === 'all' || tag === activeTag;
+            if (matchSearch && matchTag) { row.style.display = ''; visible++; }
+            else { row.style.display = 'none'; }
+        });
+        if (visible === 0) {
+            emptyState.style.display = '';
+            if (emptyQuery) emptyQuery.textContent = searchInput?.value || activeTag;
+        } else {
+            emptyState.style.display = 'none';
+        }
+    }
+
+    searchInput?.addEventListener('input', filterRows);
+    tagPills.forEach(pill => {
+        pill.addEventListener('click', () => {
+            tagPills.forEach(p => p.classList.remove('tag-pill-active'));
+            pill.classList.add('tag-pill-active');
+            activeTag = pill.dataset.tag;
+            filterRows();
+        });
+    });
+})();
+</script>
+</body>
 }
 
-templ Post(postContent templ.Component, title string, publishedAt time.Time) {
-    <body>
-    @navBar(title)
-    <div class="container post-container">
-    @postContent
-    <div class="post-meta">published { publishedAt.Format("Jan 2006") }</div>
+templ Post(postContent templ.Component, p blog.Post, b blog.Blog, prevPost blog.Post, nextPost blog.Post) {
+<body>
+@blog.Nav("blog", b)
+<div class="container page-enter">
+
+    <a href="/blog" class="post-back">← cd ~/blog</a>
+
+    <div class="post-header">
+        <div class="post-crumb">~/blog/<span class="post-crumb-slug">{ p.Slug }.md</span></div>
+        <h1 class="post-h1">{ p.Title }</h1>
+        <div class="post-meta-row">
+            <span>{ p.Date.Format("2006-01-02") }</span>
+            <span>·</span>
+            if p.ReadTime != "" {
+                <span>{ p.ReadTime } read</span>
+                <span>·</span>
+            }
+            <span class="chip">{ p.Tag }</span>
+        </div>
     </div>
-    </body>
+
+    <div class="post-body">
+        @postContent
+    </div>
+
+    <div class="post-nav">
+        if prevPost.Slug != "" {
+            <a href={ templ.SafeURL(prevPost.URL) } class="post-nav-card">
+                <div class="post-nav-label">← prev</div>
+                <div class="post-nav-title">{ prevPost.Title }</div>
+            </a>
+        } else {
+            <div></div>
+        }
+        if nextPost.Slug != "" {
+            <a href={ templ.SafeURL(nextPost.URL) } class="post-nav-card" style="text-align:right">
+                <div class="post-nav-label">next →</div>
+                <div class="post-nav-title">{ nextPost.Title }</div>
+            </a>
+        } else {
+            <div></div>
+        }
+    </div>
+
+</div>
+@blog.Footer(b)
+</body>
 }
 
 func Unsafe(html string) templ.Component {
-	return templ.ComponentFunc(func(ctx context.Context, w io.Writer) (err error) {
-		_, err = io.WriteString(w, html)
-		return
-	})
+    return templ.ComponentFunc(func(ctx context.Context, w io.Writer) (err error) {
+        _, err = io.WriteString(w, html)
+        return
+    })
 }

@@ -1,99 +1,111 @@
 package blog
 
 import (
-    "strings"
     "strconv"
+    "strings"
 )
 
 templ Body(b Blog) {
 <body>
-    <nav class="topnav">
-        <div class="topnav-inner">
-            <a href="/">{b.Name}</a>
-            <span style="margin-left: auto;"></span>
-            <a href="/blog">Blog</a>
+@Nav("home", b)
+<div class="container page-enter">
+
+    <!-- HERO -->
+    <div class="hero-grid">
+
+        <!-- Left: text column -->
+        <div>
+            <div class="hero-chips">
+                <span class="chip chip-accent">● engineer.yaml</span>
+                <span class="chip chip-green">ready 1/1</span>
+            </div>
+            <h1 class="hero-h1 glitch">
+                Staff platform<br/>
+                engineer, shipping<br/>
+                <span style="color:var(--accent)">k8s</span> at scale.
+            </h1>
+            <p class="hero-bio">{ b.Bio }</p>
+            <div class="hero-buttons">
+                <a href={ templ.SafeURL(b.GitHubURL) } class="btn btn-accent" target="_blank" rel="noopener noreferrer">github ↗</a>
+                <a href={ templ.SafeURL(b.LinkedInURL) } class="btn btn-ghost" target="_blank" rel="noopener noreferrer">linkedin</a>
+                <a href="/about" class="btn btn-ghost">describe spec</a>
+            </div>
+            <div class="hero-uptime">
+                <span class="pulse-wrap">
+                    <span class="pulse-ring"></span>
+                    <span class="pulse-dot"></span>
+                </span>
+                <span>uptime <span id="uptime-tick">0d 00h 00m 00s</span></span>
+            </div>
         </div>
-    </nav>
-    <div class="container">
 
-        <!-- HERO -->
-        <section class="hero">
-            <div class="hero-top">
-                <img src={"https://unavatar.io/github/" + b.GitHubName} alt={b.Name + " Avatar"} class="avatar" />
-                <div class="hero-text">
-                    <h1 class="glitch" data-text={b.Name}>{b.Name}</h1>
-                    <p class="hero-title">{b.Title}</p>
-                </div>
+        <!-- Right: YAML manifest card -->
+        <div class="yaml-card">
+            <div class="yaml-card-header">
+                <span>engineer.yaml</span>
+                <span class="yaml-card-header-right">kubectl apply ⏎</span>
             </div>
-            <p class="bio">{b.Bio}</p>
-            <div class="role-chips">
-                for _, role := range b.Roles {
-                    <span class="chip">{role}</span>
-                }
-            </div>
-            <div class="hero-links">
-                <a href={templ.SafeURL(b.GitHubURL)} class="hero-link" target="_blank" rel="noopener noreferrer">GitHub</a>
-                <a href={templ.SafeURL(b.LinkedInURL)} class="hero-link" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-                <a href="/blog" class="hero-link">Blog</a>
-                <a href={"mailto:" + b.Email} class="hero-link">Email</a>
-            </div>
-        </section>
-
-        <div class="divider"></div>
-
-        <!-- SKILLS -->
-        <section class="section">
-            <h2 class="section-header">Skills</h2>
-            <div class="skills-grid">
-                for _, cat := range b.Skills {
-                    <div class="skill-category">
-                        <div class="skill-cat-label">{cat.Category}</div>
-                        <div class="skill-tags">
-                            for _, item := range cat.Items {
-                                <span class="skill-tag">{item}</span>
-                            }
-                        </div>
-                    </div>
-                }
-            </div>
-        </section>
-
-        <div class="divider"></div>
-
-        <!-- GIGACHAD PATH -->
-        <section class="section">
-            <h2 class="section-header">Experience</h2>
-            <div class="timeline">
-                <div class="outer">
-                    for _, j := range b.JobRoles {
-                        <div class="card">
-                            <div class="info">
-                                <div class="job-header">
-                                    <h3 class="title">{j.Title}</h3>
-                                    <span class="job-date">{j.Date}</span>
-                                </div>
-                                for _, line := range strings.Split(j.Description, "\n") {
-                                    if strings.TrimSpace(line) != "" {
-                                        <p class="job-bullet"><span class="bullet">–</span> {strings.TrimSpace(line)}</p>
-                                    }
-                                }
-                            </div>
-                        </div>
+            <div class="yaml-body">
+                <div class="yaml-gutter">
+                    for i := range 17 {
+                        <div>{ strconv.Itoa(i + 1) }</div>
                     }
                 </div>
+                <div class="yaml-code">
+                    @templ.Raw(`<span class="yc"># zeljko.benovic.v1.yaml</span>
+<span class="yk">apiVersion</span>: <span class="yv">platform.zex.io/v1</span>
+<span class="yk">kind</span>: <span class="ya">Engineer</span>
+<span class="yk">metadata</span>:
+  <span class="yk">name</span>: <span class="ys">"Željko Benović"</span>
+  <span class="yk">namespace</span>: <span class="yv">consensys-linea</span>
+  <span class="yk">labels</span>:
+    <span class="yk">role</span>: <span class="yv">staff-platform-engineer</span>
+    <span class="yk">tier</span>: <span class="yv">production</span>
+<span class="yk">spec</span>:
+  <span class="yk">replicas</span>: <span class="yn">1</span>  <span class="yc"># irreplaceable</span>
+  <span class="yk">expertise</span>:
+    <span class="yd">-</span> <span class="yv">kubernetes</span>
+    <span class="yd">-</span> <span class="yv">devsecops</span>
+    <span class="yd">-</span> <span class="yv">gitops</span>
+    <span class="yd">-</span> <span class="yv">site-reliability</span>
+  <span class="yk">status</span>: <span class="yg">Running</span>`)
+                </div>
             </div>
-        </section>
+        </div>
+    </div>
 
-        <div class="divider"></div>
+    <!-- NODEPOOLS (SKILLS) -->
+    <div class="home-section">
+        <div class="section-label"># kubectl get nodepools</div>
+        <div class="nodepools-grid">
+            for _, cat := range b.Skills {
+                <div class="nodepool-card">
+                    <div class="nodepool-header">
+                        <span class="nodepool-name">pool/<span style="text-transform:lowercase">{ strings.ToLower(cat.Category) }</span></span>
+                        <span class="nodepool-count">{ strconv.Itoa(len(cat.Items)) }/{ strconv.Itoa(len(cat.Items)) }</span>
+                    </div>
+                    <div class="nodepool-chips">
+                        for _, item := range cat.Items {
+                            <span class="chip">{ strings.ToLower(item) }</span>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
 
-        <!-- PROJECTS -->
-        <section class="section">
-            <h2 class="section-header">Projects</h2>
-            <div class="project-grid">
-                for _, p := range b.Projects {
-                    <a href={templ.SafeURL(p.ProjectURL)} class="project-card" target="_blank" rel="noopener noreferrer">
-                        <div class="project-top">
-                            <span class="project-name">{ p.Name }</span>
+    <!-- DEPLOYMENTS (PROJECTS PREVIEW) -->
+    <div class="home-section">
+        <div class="section-label-row">
+            <div class="section-label"># kubectl get deployments</div>
+            <a href="/projects" class="section-pill-link">all { strconv.Itoa(len(b.Projects)) } →</a>
+        </div>
+        <div class="deployments-grid">
+            for i, p := range b.Projects {
+                if i < 4 {
+                    <a href={ templ.SafeURL(p.ProjectURL) } class="project-card" target="_blank" rel="noopener noreferrer">
+                        <div class="project-card-top">
+                            <span><span class="project-kind">{ p.Kind }/</span><span class="project-name">{ p.Name }</span></span>
                             if p.Stars > 0 {
                                 <span class="project-stars">★ { strconv.Itoa(p.Stars) }</span>
                             }
@@ -101,34 +113,60 @@ templ Body(b Blog) {
                         <p class="project-desc">{ p.Description }</p>
                         <div class="project-tags">
                             for _, tag := range p.Tags {
-                                <span class="tag">{ tag }</span>
+                                <span class="chip">{ strings.ToLower(tag) }</span>
                             }
                         </div>
                     </a>
                 }
-            </div>
-        </section>
-
-        <div class="divider"></div>
-
-        <!-- BLOG -->
-        <section class="section">
-            <h2 class="section-header">Writing</h2>
-            if len(b.Posts) != 0 {
-                <div class="post-list">
-                    for _, p := range b.Posts {
-                        <a href={ templ.SafeURL(p.URL) } class="post-card">
-                            <span class="post-title">{ p.Title }</span>
-                            <span class="post-arrow">→</span>
-                        </a>
-                    }
-                </div>
-            } else {
-                <p class="empty">No posts yet.</p>
             }
-        </section>
-
-        @footer(b.Name)
+        </div>
     </div>
+
+    <!-- LOG TAIL (RECENT POSTS) -->
+    <div class="home-section">
+        <div class="section-label-row">
+            <div class="section-label"># kubectl logs --tail=3 blog</div>
+            <a href="/blog" class="section-pill-link">all posts →</a>
+        </div>
+        <div class="log-rows">
+            for i, p := range b.Posts {
+                if i < 3 {
+                    <a href={ templ.SafeURL(p.URL) } class="log-row">
+                        <span class="log-date">{ p.Date.Format("2006-01-02") }</span>
+                        <span class="log-title">{ p.Title }</span>
+                        <span class="chip">{ p.Tag }</span>
+                        <span class="log-arrow">→</span>
+                    </a>
+                }
+            }
+        </div>
+    </div>
+
+    @Footer(b)
+</div>
+
+<script>
+(function() {
+    const start = new Date('2024-04-01T00:00:00Z');
+    function tick() {
+        const diff = Date.now() - start.getTime();
+        const d = Math.floor(diff / 86400000);
+        const h = Math.floor((diff % 86400000) / 3600000);
+        const m = Math.floor((diff % 3600000) / 60000);
+        const s = Math.floor((diff % 60000) / 1000);
+        const el = document.getElementById('uptime-tick');
+        if (el) el.textContent =
+            d + 'd ' +
+            String(h).padStart(2,'0') + 'h ' +
+            String(m).padStart(2,'0') + 'm ' +
+            String(s).padStart(2,'0') + 's';
+    }
+    tick();
+    setInterval(tick, 1000);
+    // suppress unused import warning
+    void(0);
+})();
+</script>
 </body>
 }
+

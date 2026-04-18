@@ -1,0 +1,150 @@
+package blog
+
+templ Nav(active string, b Blog) {
+<nav class="topnav">
+    <div class="topnav-inner">
+        <a href="/" class="nav-brand">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="10,2 16.25,5.01 17.80,11.78 13.47,17.21 6.53,17.21 2.20,11.78 3.75,5.01"
+                    stroke="#00d9ff" stroke-width="1.5" fill="rgba(0,217,255,0.08)"/>
+                <circle cx="10" cy="10" r="2" fill="#00d9ff" opacity="0.6"/>
+            </svg>
+            <div class="nav-brand-text">
+                <div class="brand-wordmark">
+                    <span class="brand-zex">zex</span><span class="brand-cluster">.cluster</span>
+                </div>
+                <div class="brand-subtitle">kubectl get <span class="brand-active">{ active }</span></div>
+            </div>
+        </a>
+        <div class="nav-spacer"></div>
+        <nav class="nav-links">
+            if active == "home" {
+                <a href="/" class="nav-link nav-link-active">home</a>
+            } else {
+                <a href="/" class="nav-link">home</a>
+            }
+            if active == "blog" {
+                <a href="/blog" class="nav-link nav-link-active">blog</a>
+            } else {
+                <a href="/blog" class="nav-link">blog</a>
+            }
+            if active == "projects" {
+                <a href="/projects" class="nav-link nav-link-active">projects</a>
+            } else {
+                <a href="/projects" class="nav-link">projects</a>
+            }
+            if active == "about" {
+                <a href="/about" class="nav-link nav-link-active">about</a>
+            } else {
+                <a href="/about" class="nav-link">about</a>
+            }
+            <button class="nav-cmdk" id="cmdk-btn">⌘K</button>
+        </nav>
+    </div>
+</nav>
+}
+
+templ CommandPalette(b Blog) {
+<div class="palette-overlay" id="cmd-palette">
+    <div class="palette-backdrop" id="palette-backdrop"></div>
+    <div class="palette-modal">
+        <div class="palette-header">
+            <span class="palette-prompt">$</span>
+            <input class="palette-input" id="palette-input" placeholder="kubectl ..." autocomplete="off"/>
+            <span class="palette-esc">esc</span>
+        </div>
+        <div class="palette-items" id="palette-items">
+            <a href="/" class="palette-item" data-label="cd ~/" data-desc="home">
+                <span class="palette-cmd">cd ~/</span>
+                <span class="palette-sub">home</span>
+                <span class="palette-enter">↵</span>
+            </a>
+            <a href="/blog" class="palette-item" data-label="get blog" data-desc="all posts">
+                <span class="palette-cmd">get blog</span>
+                <span class="palette-sub">all posts</span>
+                <span class="palette-enter">↵</span>
+            </a>
+            <a href="/projects" class="palette-item" data-label="get projects" data-desc="open-source workloads">
+                <span class="palette-cmd">get projects</span>
+                <span class="palette-sub">open-source workloads</span>
+                <span class="palette-enter">↵</span>
+            </a>
+            <a href="/about" class="palette-item" data-label="describe engineer" data-desc="resource spec">
+                <span class="palette-cmd">describe engineer</span>
+                <span class="palette-sub">resource spec</span>
+                <span class="palette-enter">↵</span>
+            </a>
+            <a href="/404" class="palette-item" data-label="crash pod" data-desc="CrashLoopBackOff demo">
+                <span class="palette-cmd">crash pod</span>
+                <span class="palette-sub">CrashLoopBackOff demo</span>
+                <span class="palette-enter">↵</span>
+            </a>
+            for _, p := range b.Posts {
+                <a href={ templ.SafeURL(p.URL) } class="palette-item" data-label={ "get post/" + p.Slug } data-desc={ p.Title }>
+                    <span class="palette-cmd">{ "get post/" + p.Slug }</span>
+                    <span class="palette-sub">{ p.Title }</span>
+                    <span class="palette-enter">↵</span>
+                </a>
+            }
+            for _, p := range b.Projects {
+                <a href={ templ.SafeURL(p.ProjectURL) } class="palette-item" data-label={ "open " + p.Kind + "/" + p.Name } data-desc={ p.Description } target="_blank" rel="noopener">
+                    <span class="palette-cmd">{ "open " + p.Kind + "/" + p.Name }</span>
+                    <span class="palette-sub">{ p.Description }</span>
+                    <span class="palette-enter">↵</span>
+                </a>
+            }
+        </div>
+    </div>
+</div>
+<script>
+(function() {
+    const overlay = document.getElementById('cmd-palette');
+    const input   = document.getElementById('palette-input');
+    const items   = document.querySelectorAll('.palette-item');
+    let active    = -1;
+
+    function open() {
+        overlay.classList.add('open');
+        input.value = '';
+        input.focus();
+        filter('');
+        active = -1;
+    }
+    function close() {
+        overlay.classList.remove('open');
+        active = -1;
+    }
+    function filter(q) {
+        const lower = q.toLowerCase();
+        items.forEach(item => {
+            const label = (item.dataset.label || '').toLowerCase();
+            const desc  = (item.dataset.desc || '').toLowerCase();
+            item.style.display = (!q || label.includes(lower) || desc.includes(lower)) ? '' : 'none';
+        });
+        setActive(-1);
+    }
+    function setActive(idx) {
+        items.forEach((el, i) => el.classList.toggle('active', i === idx));
+        active = idx;
+    }
+    function visibleItems() {
+        return Array.from(items).filter(el => el.style.display !== 'none');
+    }
+
+    document.getElementById('cmdk-btn')?.addEventListener('click', open);
+    document.getElementById('palette-backdrop')?.addEventListener('click', close);
+    input?.addEventListener('input', () => filter(input.value));
+    input?.addEventListener('keydown', e => {
+        const vis = visibleItems();
+        if (e.key === 'ArrowDown') { e.preventDefault(); setActive(Math.min(active + 1, vis.length - 1)); }
+        if (e.key === 'ArrowUp')   { e.preventDefault(); setActive(Math.max(active - 1, 0)); }
+        if (e.key === 'Enter' && active >= 0) { vis[active]?.click(); close(); }
+        if (e.key === 'Escape') close();
+    });
+    document.addEventListener('keydown', e => {
+        if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); overlay.classList.contains('open') ? close() : open(); }
+        if (e.key === 'Escape' && overlay.classList.contains('open')) close();
+    });
+})();
+</script>
+}

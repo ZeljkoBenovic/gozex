@@ -37,6 +37,12 @@ func main() {
 		log.Fatalf("Error parsing config.yaml: %v", err)
 	}
 
+	// Build a slug→meta lookup for tags and read times.
+	metaMap := make(map[string]blog.PostMeta)
+	for _, m := range data.PostsMeta {
+		metaMap[m.Slug] = m
+	}
+
 	// Normalise site URL: strip trailing slash for consistent joining.
 	siteURL := strings.TrimRight(data.SiteURL, "/")
 
@@ -44,47 +50,51 @@ func main() {
 	rootFolder := "public"
 	blogFolder := path.Join(rootFolder, "blog")
 
-	// render posts based on MD files in posts folder, file names must be in slug format
+	// Render posts based on MD files in posts folder; file names must be in slug format.
 	if err := filepath.Walk("./posts/.", func(postFilePath string, info os.FileInfo, err error) error {
-		// skip processing dirs
 		if info.IsDir() {
 			return nil
 		}
 
-		// get filename without extension
 		postSlug := strings.Split(info.Name(), ".")[0]
-		// get post title — prefer the H1 from the file; fall back to slug-derived title
 		postTitle := h1FromFile(postFilePath)
 		if postTitle == "" {
 			postTitle = cases.Title(language.English).String(strings.ReplaceAll(postSlug, "-", " "))
 		}
-		// get post URL
 		postURL := path.Join(blogFolder, info.ModTime().Format("2006/01/02"), postSlug)
 
-		data.Posts = append(data.Posts, blog.Post{
+		p := blog.Post{
 			Title:    postTitle,
 			Date:     info.ModTime(),
 			Slug:     postSlug,
 			FilePath: postFilePath,
 			URL:      strings.TrimPrefix(postURL, "public") + "/",
-		})
+		}
 
+		if m, ok := metaMap[postSlug]; ok {
+			p.Tag = m.Tag
+			p.ReadTime = m.ReadTime
+		}
+
+		data.Posts = append(data.Posts, p)
 		return nil
 	}); err != nil {
 		log.Fatalf("could not fetch posts: %v", err)
 	}
 
-	//create public folder
-	if err := os.Mkdir(rootFolder, 0755); err != nil && !os.IsExist(err) {
-		log.Fatalf("failed to create public root dir: %v", err)
+	// Create output directories.
+	for _, dir := range []string{
+		rootFolder,
+		blogFolder,
+		path.Join(rootFolder, "projects"),
+		path.Join(rootFolder, "about"),
+	} {
+		if err := os.MkdirAll(dir, 0755); err != nil && !os.IsExist(err) {
+			log.Fatalf("failed to create dir %q: %v", dir, err)
+		}
 	}
 
-	// create public/blog folder
-	if err := os.Mkdir(blogFolder, 0755); err != nil && !os.IsExist(err) {
-		log.Fatalf("failed to create blog root dir: %v", err)
-	}
-
-	// create public/index.html
+	// ── public/index.html ────────────────────────────────────────────────────
 	index, err := os.Create(path.Join(rootFolder, "index.html"))
 	if err != nil {
 		log.Fatalf("could not create public/index.html: %v", err)
@@ -101,46 +111,82 @@ func main() {
 		OGType:       "website",
 		JSONLD:       personJSONLD(data, siteURL),
 	}
-
-	// render public/index.html
-	if err = blog.Index(homeSEO, blog.Body(data)).Render(ctx, index); err != nil {
+	if err = blog.Index(homeSEO, data, blog.Body(data)).Render(ctx, index); err != nil {
 		log.Fatalf("could not render public/index.html: %v", err)
 	}
 
-	// create public/blog/index.html
+	// ── public/blog/index.html ───────────────────────────────────────────────
 	blogIndex, err := os.Create(path.Join(blogFolder, "index.html"))
 	if err != nil {
 		log.Fatalf("failed to create public/blog/index.html file: %v", err)
 	}
-
 	blogSEO := blog.SEOMeta{
 		Title:        "Kubernetes & Platform Engineering Blog – " + data.Name,
 		Description:  "Engineering blog covering Kubernetes operations, SRE practices, platform automation, and DevSecOps — practical insights from production at Consensys Linea and Polygon Labs.",
 		CanonicalURL: siteURL + "/blog/",
 		OGType:       "website",
 	}
-
-	// render public/blog/index.html
-	err = blog.Index(blogSEO, posts.Body(data)).Render(ctx, blogIndex)
-	if err != nil {
-		log.Fatalf("failed to write index page: %v", err)
+	if err = blog.Index(blogSEO, data, posts.Body(data)).Render(ctx, blogIndex); err != nil {
+		log.Fatalf("failed to write blog index page: %v", err)
 	}
 
-	for _, post := range data.Posts {
-		// create dedicated folder for each post
+	// ── public/projects/index.html ───────────────────────────────────────────
+	projFile, err := os.Create(path.Join(rootFolder, "projects", "index.html"))
+	if err != nil {
+		log.Fatalf("failed to create public/projects/index.html: %v", err)
+	}
+	projSEO := blog.SEOMeta{
+		Title:        "Open-Source Projects – " + data.Name,
+		Description:  "Open-source Go tools and Kubernetes utilities by Željko Benović — platform automation, DevSecOps, and SRE tooling.",
+		CanonicalURL: siteURL + "/projects/",
+		OGType:       "website",
+	}
+	if err = blog.Index(projSEO, data, blog.Projects(data)).Render(ctx, projFile); err != nil {
+		log.Fatalf("failed to write projects page: %v", err)
+	}
+
+	// ── public/about/index.html ──────────────────────────────────────────────
+	aboutFile, err := os.Create(path.Join(rootFolder, "about", "index.html"))
+	if err != nil {
+		log.Fatalf("failed to create public/about/index.html: %v", err)
+	}
+	aboutSEO := blog.SEOMeta{
+		Title:        "About – " + data.Name,
+		Description:  "Staff Platform Engineer specializing in Kubernetes, SRE, and DevSecOps. Career history, expertise, and background.",
+		CanonicalURL: siteURL + "/about/",
+		OGType:       "website",
+	}
+	if err = blog.Index(aboutSEO, data, blog.About(data)).Render(ctx, aboutFile); err != nil {
+		log.Fatalf("failed to write about page: %v", err)
+	}
+
+	// ── public/404.html ──────────────────────────────────────────────────────
+	notFoundFile, err := os.Create(path.Join(rootFolder, "404.html"))
+	if err != nil {
+		log.Fatalf("failed to create public/404.html: %v", err)
+	}
+	notFoundSEO := blog.SEOMeta{
+		Title:       "404 – CrashLoopBackOff | " + data.Name,
+		Description: "The resource you requested does not exist in this namespace.",
+		OGType:      "website",
+	}
+	if err = blog.Index(notFoundSEO, data, blog.NotFound(data)).Render(ctx, notFoundFile); err != nil {
+		log.Fatalf("failed to write 404 page: %v", err)
+	}
+
+	// ── Individual blog posts ────────────────────────────────────────────────
+	for i, post := range data.Posts {
 		dir := path.Join(blogFolder, post.Date.Format("2006/01/02"), post.Slug)
 		if err = os.MkdirAll(dir, 0755); err != nil && !errors.Is(err, os.ErrNotExist) {
 			log.Fatalf("failed to create dir %q: %v", dir, err)
 		}
 
-		// create index.html for each post
 		name := path.Join(dir, "index.html")
 		outFile, err := os.Create(name)
 		if err != nil {
 			log.Fatalf("failed to create output file: %v", err)
 		}
 
-		// read post content from posts MD file
 		postContent, err := os.ReadFile(post.FilePath)
 		if err != nil {
 			log.Fatalf("failed to read post content: %v", err)
@@ -152,7 +198,6 @@ func main() {
 				parser.WithAttribute(),
 			),
 		)
-		// and convert it to HTML
 		var buf bytes.Buffer
 		if err := gm.Convert(postContent, &buf); err != nil {
 			log.Fatalf("failed to convert markdown to HTML: %v", err)
@@ -168,26 +213,29 @@ func main() {
 			JSONLD:       blogPostingJSONLD(post, data, postURL, postDesc, siteURL),
 		}
 
-		// Create an unsafe component containing raw HTML.
-		content := posts.Unsafe(buf.String())
+		// Compute prev/next (by index position).
+		var prevPost, nextPost blog.Post
+		if i > 0 {
+			prevPost = data.Posts[i-1]
+		}
+		if i < len(data.Posts)-1 {
+			nextPost = data.Posts[i+1]
+		}
 
-		// Use templ to render the template containing the raw HTML.
-		if err = blog.Index(postSEO, posts.Post(content, post.Title, post.Date)).Render(ctx, outFile); err != nil {
+		content := posts.Unsafe(buf.String())
+		if err = blog.Index(postSEO, data, posts.Post(content, post, data, prevPost, nextPost)).Render(ctx, outFile); err != nil {
 			log.Fatalf("failed to write output file: %v", err)
 		}
 	}
 
-	// Generate robots.txt
+	// Generate robots.txt and sitemap.xml.
 	generateRobotsTxt(rootFolder, siteURL)
-
-	// Generate sitemap.xml (only when a site URL is configured)
 	if siteURL != "" {
 		generateSitemap(rootFolder, siteURL, data.Posts)
 	}
 }
 
-// h1FromFile reads a Markdown file and returns the text of the first H1 heading,
-// or an empty string if none is found.
+// h1FromFile reads a Markdown file and returns the text of the first H1 heading.
 func h1FromFile(filePath string) string {
 	raw, err := os.ReadFile(filePath)
 	if err != nil {
@@ -202,7 +250,6 @@ func h1FromFile(filePath string) string {
 	return ""
 }
 
-// truncate shortens s to at most max characters, appending "…" if trimmed.
 func truncate(s string, max int) string {
 	s = strings.TrimSpace(s)
 	if len(s) <= max {
@@ -211,15 +258,12 @@ func truncate(s string, max int) string {
 	return s[:max-1] + "…"
 }
 
-// extractDescription returns the first meaningful non-heading paragraph from
-// Markdown source, stripped of inline markers, capped at 160 characters.
 func extractDescription(md string) string {
 	for _, line := range strings.Split(md, "\n") {
 		line = strings.TrimSpace(line)
 		if line == "" || strings.HasPrefix(line, "#") || strings.HasPrefix(line, "```") {
 			continue
 		}
-		// Strip common inline Markdown markers.
 		for _, marker := range []string{"**", "*", "`", "_"} {
 			line = strings.ReplaceAll(line, marker, "")
 		}
@@ -228,8 +272,6 @@ func extractDescription(md string) string {
 	return ""
 }
 
-// personJSONLD returns a Schema.org Person JSON-LD string for the homepage.
-// It includes knowsAbout (derived from all skill items) and worksFor (current company).
 func personJSONLD(data blog.Blog, siteURL string) string {
 	obj := map[string]any{
 		"@context": "https://schema.org",
@@ -241,7 +283,6 @@ func personJSONLD(data blog.Blog, siteURL string) string {
 	if siteURL != "" {
 		obj["url"] = siteURL + "/"
 	}
-	// Use the dedicated SEO description if available, otherwise fall back to bio.
 	desc := data.SEODescription
 	if desc == "" {
 		desc = data.Bio
@@ -249,7 +290,6 @@ func personJSONLD(data blog.Blog, siteURL string) string {
 	if desc != "" {
 		obj["description"] = desc
 	}
-	// Flatten all skill items into knowsAbout for rich structured signal.
 	var skills []string
 	for _, cat := range data.Skills {
 		skills = append(skills, cat.Items...)
@@ -257,7 +297,6 @@ func personJSONLD(data blog.Blog, siteURL string) string {
 	if len(skills) > 0 {
 		obj["knowsAbout"] = skills
 	}
-	// Current employer, if configured.
 	if data.Company != "" {
 		obj["worksFor"] = map[string]string{
 			"@type": "Organization",
@@ -271,8 +310,6 @@ func personJSONLD(data blog.Blog, siteURL string) string {
 	return string(b)
 }
 
-// blogPostingJSONLD returns a Schema.org @graph JSON-LD string for a post page.
-// It combines BlogPosting and BreadcrumbList in a single script block.
 func blogPostingJSONLD(p blog.Post, data blog.Blog, postURL, description string, siteURL string) string {
 	author := map[string]any{
 		"@type": "Person",
@@ -292,8 +329,6 @@ func blogPostingJSONLD(p blog.Post, data blog.Blog, postURL, description string,
 			"@type": "Person",
 			"name":  data.Name,
 		},
-		// Surface the author's primary expertise as post keywords so crawlers
-		// associate the content with the Kubernetes/SRE topic cluster.
 		"keywords": "Kubernetes, SRE, Platform Engineering, DevSecOps, Go, DevOps",
 	}
 	if postURL != "" {
@@ -327,7 +362,6 @@ func blogPostingJSONLD(p blog.Post, data blog.Blog, postURL, description string,
 	return string(b)
 }
 
-// generateRobotsTxt writes public/robots.txt.
 func generateRobotsTxt(rootFolder, siteURL string) {
 	var sb strings.Builder
 	sb.WriteString("User-agent: *\n")
@@ -340,7 +374,6 @@ func generateRobotsTxt(rootFolder, siteURL string) {
 	}
 }
 
-// generateSitemap writes public/sitemap.xml.
 func generateSitemap(rootFolder, siteURL string, blogPosts []blog.Post) {
 	var sb strings.Builder
 	sb.WriteString(`<?xml version="1.0" encoding="UTF-8"?>` + "\n")
@@ -359,6 +392,8 @@ func generateSitemap(rootFolder, siteURL string, blogPosts []blog.Post) {
 
 	writeURL(siteURL+"/", "", "monthly", "1.0")
 	writeURL(siteURL+"/blog/", "", "weekly", "0.8")
+	writeURL(siteURL+"/projects/", "", "monthly", "0.7")
+	writeURL(siteURL+"/about/", "", "monthly", "0.7")
 
 	for _, p := range blogPosts {
 		postURL := siteURL + p.URL

@@ -2,6 +2,21 @@ package blog
 
 import "time"
 
-templ footer(name string) {
-    <div class="footer">© <span id="year">{ time.Now().Year() }</span> { name }</div>
+templ Footer(b Blog) {
+<footer class="footer">
+    <span>© { time.Now().Format("2006") } { b.Name } · all pods reserved</span>
+    <div class="footer-right">
+        <a href={ templ.SafeURL(b.GitHubURL) } class="footer-link" target="_blank" rel="noopener noreferrer">github</a>
+        <span style="color:var(--text-dim)">·</span>
+        <a href={ templ.SafeURL(b.LinkedInURL) } class="footer-link" target="_blank" rel="noopener noreferrer">linkedin</a>
+        <span style="color:var(--text-dim)">·</span>
+        <div class="footer-healthy">
+            <span class="pulse-wrap">
+                <span class="pulse-ring"></span>
+                <span class="pulse-dot"></span>
+            </span>
+            <span>healthy</span>
+        </div>
+    </div>
+</footer>
 }

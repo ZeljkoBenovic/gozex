@@ -45,6 +45,7 @@ skills:
           - Bash
 projects:
     - name: gombak
+      kind: job
       project_url: https://github.com/ZeljkoBenovic/gombak
       description: Go-based automation service for MikroTik router backup management — supports single-device and fleet-wide discovery via L2TP, SSH-based access, configurable retention policies, and system service integration for scheduled unattended backups.
       stars: 14
@@ -53,6 +54,7 @@ projects:
           - MikroTik
           - SSH
     - name: tsbc
+      kind: deploy
       project_url: https://github.com/ZeljkoBenovic/tsbc
       description: Containerised Session Border Controller that bridges SIP/UDP-based PBX systems with Microsoft Teams Direct Routing — orchestrates Kamailio, RTPEngine, and LetsEncrypt TLS to handle signalling and media translation without dedicated SBC hardware.
       stars: 13
@@ -61,6 +63,7 @@ projects:
           - Kamailio
           - Docker
     - name: aws-commander
+      kind: cronjob
       project_url: https://github.com/ZeljkoBenovic/aws-commander
       description: CLI tool for fleet-wide remote execution on EC2 instances via AWS SSM Run Command — supports ad-hoc shell commands, script files, and Ansible playbooks, targeting instances by ID or tag without requiring inbound SSH access or open security group rules.
       stars: 5
@@ -69,6 +72,7 @@ projects:
           - AWS
           - SSM
     - name: govein
+      kind: exporter
       project_url: https://github.com/ZeljkoBenovic/govein
       description: Metrics exporter that queries Veeam Backup & Replication 12+ via its REST API and ships structured job telemetry to InfluxDB 2.0 — ships with a Grafana dashboard template and supports standalone binary, Docker Compose, and Kubernetes Helm deployment.
       stars: 4
@@ -77,6 +81,7 @@ projects:
           - Docker
           - Kubernetes
     - name: tpser
+      kind: tool
       project_url: https://github.com/ZeljkoBenovic/tpser
       description: EVM chain performance testing toolkit with two operating modes — a block-range analyser for historical TPS and gas utilisation reporting, and a sustained load generator for stress-testing nodes at configurable transaction rates over extended durations.
       stars: 1
@@ -85,6 +90,7 @@ projects:
           - Ethereum
           - Blockchain
     - name: vmex
+      kind: cli
       project_url: https://github.com/ZeljkoBenovic/vmex
       description: CLI utility that queries VMware vCenter via the vSphere API and exports filtered VM inventory data to formatted Excel workbooks — addressing the limitations of vCenter's native CSV-only export for operational reporting and auditing workflows.
       stars: 1
@@ -92,6 +98,7 @@ projects:
           - Go
           - VMware
     - name: kmon
+      kind: cli
       project_url: https://github.com/ZeljkoBenovic/kmon
       description: Kubernetes administrative CLI and k9s plugin that automates common storage operations — spins up debug pods from live PVCs, restores volumes from VolumeSnapshots, and generates on-demand or CronJob-scheduled snapshots with configurable snapshot class support.
       stars: 0
@@ -133,3 +140,25 @@ job_roles:
     description: |-
       Designed and operated core on-premises infrastructure on a VMware vSphere cluster, encompassing BGP/OSPF routing, stateful firewall policies, site-to-site VPN, and enterprise Veeam Backup & Replication with tested DR runbooks.
       Deployed and maintained IPAM, IDP, and IDS solutions to enforce network governance and threat detection across a multi-tenant environment; led and mentored a team of five engineers.
+post_meta:
+  - slug: easy-mikrotik-backup
+    tag: network
+    read_time: "4m"
+  - slug: ec2-fleet-commands-without-ssh
+    tag: aws
+    read_time: "5m"
+  - slug: evm-chain-performance-testing-with-tpser
+    tag: blockchain
+    read_time: "5m"
+  - slug: kubernetes-pvc-snapshot-management-with-kmon
+    tag: kubernetes
+    read_time: "4m"
+  - slug: teams-direct-routing-without-sbc-hardware
+    tag: voip
+    read_time: "6m"
+  - slug: veeam-backup-grafana-dashboard
+    tag: observability
+    read_time: "3m"
+  - slug: vmware-vcenter-vm-inventory-export-to-excel
+    tag: vmware
+    read_time: "4m"

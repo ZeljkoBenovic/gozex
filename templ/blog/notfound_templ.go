@@ -8,7 +8,7 @@ package blog
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-func Index(seo SEOMeta, b Blog, body templ.Component) templ.Component {
+func NotFound(b Blog) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -29,23 +29,23 @@ func Index(seo SEOMeta, b Blog, body templ.Component) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<!doctype html><html lang=\"en\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<body>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = header(seo).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = Nav("", b).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = body.Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<div class=\"container page-enter\"><div class=\"notfound-page\"><pre class=\"notfound-pre\">$ kubectl get pod/requested-page Error from server (NotFound): pods \"requested-page\" not found</pre><div class=\"notfound-404\">4<span class=\"notfound-0\">0</span>4</div><p class=\"notfound-body\">Pod <code style=\"font-family:var(--font-mono);color:var(--accent);background:rgba(255,255,255,0.04);padding:2px 5px;border-radius:2px\">requested-page</code> is in state <code style=\"font-family:var(--font-mono);color:var(--red);background:rgba(255,255,255,0.04);padding:2px 5px;border-radius:2px\">CrashLoopBackOff</code></p><p class=\"notfound-hint\">The resource you requested does not exist in this namespace.</p><div class=\"notfound-buttons\"><a href=\"/\" class=\"btn btn-accent\">← cd ~/</a> <a href=\"/blog\" class=\"btn btn-ghost\">kubectl get blog</a></div></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = CommandPalette(b).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = Footer(b).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</html>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</body>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

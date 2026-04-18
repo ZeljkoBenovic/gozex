@@ -1,0 +1,33 @@
+package blog
+
+templ NotFound(b Blog) {
+<body>
+@Nav("", b)
+<div class="container page-enter">
+<div class="notfound-page">
+
+    <pre class="notfound-pre">$ kubectl get pod/requested-page
+Error from server (NotFound):
+  pods "requested-page" not found</pre>
+
+    <div class="notfound-404">
+        4<span class="notfound-0">0</span>4
+    </div>
+
+    <p class="notfound-body">
+        Pod <code style="font-family:var(--font-mono);color:var(--accent);background:rgba(255,255,255,0.04);padding:2px 5px;border-radius:2px">requested-page</code> is in state
+        <code style="font-family:var(--font-mono);color:var(--red);background:rgba(255,255,255,0.04);padding:2px 5px;border-radius:2px">CrashLoopBackOff</code>
+    </p>
+
+    <p class="notfound-hint">The resource you requested does not exist in this namespace.</p>
+
+    <div class="notfound-buttons">
+        <a href="/" class="btn btn-accent">← cd ~/</a>
+        <a href="/blog" class="btn btn-ghost">kubectl get blog</a>
+    </div>
+
+</div>
+</div>
+@Footer(b)
+</body>
+}

@@ -1,0 +1,77 @@
+package blog
+
+import (
+    "strconv"
+    "strings"
+)
+
+templ Projects(b Blog) {
+<body>
+@Nav("projects", b)
+<div class="container page-enter">
+<div class="projects-page">
+
+    <div class="blog-page-header">
+        <div class="page-mono-label">$ kubectl get all -l owner=zex</div>
+        <h1 class="page-h1">open-source<br/><span style="color:var(--accent)">workloads</span></h1>
+    </div>
+
+    <div class="projects-search-wrap">
+        <div class="search-wrap" style="min-width:300px">
+            <span class="search-label">grep</span>
+            <input class="search-input" id="proj-search" placeholder="filter projects..." type="text"/>
+        </div>
+    </div>
+
+    <div class="projects-grid" id="proj-grid">
+        for _, p := range b.Projects {
+            <a href={ templ.SafeURL(p.ProjectURL) } class="project-card"
+               target="_blank" rel="noopener noreferrer"
+               data-name={ strings.ToLower(p.Name) }
+               data-desc={ strings.ToLower(p.Description) }>
+                <div class="project-card-top">
+                    <span>
+                        <span class="project-kind">{ p.Kind }/</span><span class="project-name">{ p.Name }</span>
+                    </span>
+                    if p.Stars > 0 {
+                        <span class="project-stars">★ { strconv.Itoa(p.Stars) }</span>
+                    }
+                </div>
+                <p class="project-desc">{ p.Description }</p>
+                <div class="project-tags">
+                    for _, tag := range p.Tags {
+                        <span class="chip">{ strings.ToLower(tag) }</span>
+                    }
+                </div>
+            </a>
+        }
+    </div>
+    <div id="proj-empty" class="blog-empty" style="display:none">
+        $ no resources found matching &quot;<span id="proj-empty-query"></span>&quot;
+    </div>
+
+</div>
+</div>
+@Footer(b)
+<script>
+(function() {
+    const cards = document.querySelectorAll('#proj-grid .project-card');
+    const input = document.getElementById('proj-search');
+    const empty = document.getElementById('proj-empty');
+    const emptyQ = document.getElementById('proj-empty-query');
+
+    input?.addEventListener('input', () => {
+        const q = input.value.toLowerCase();
+        let visible = 0;
+        cards.forEach(c => {
+            const match = !q || (c.dataset.name || '').includes(q) || (c.dataset.desc || '').includes(q);
+            c.style.display = match ? '' : 'none';
+            if (match) visible++;
+        });
+        if (empty) empty.style.display = visible === 0 ? '' : 'none';
+        if (emptyQ) emptyQ.textContent = input.value;
+    });
+})();
+</script>
+</body>
+}

@@ -18,6 +18,7 @@ type Blog struct {
 	Projects       []GitHubProject `yaml:"projects"`
 	Posts          []Post          `yaml:"-"`
 	JobRoles       []JobRole       `yaml:"job_roles"`
+	PostsMeta      []PostMeta      `yaml:"post_meta"`
 }
 
 // SEOMeta holds per-page SEO metadata for <head> rendering.
@@ -25,8 +26,8 @@ type SEOMeta struct {
 	Title        string
 	Description  string
 	CanonicalURL string
-	OGType       string // "website" or "article"; defaults to "website" if empty
-	JSONLD       string // raw JSON-LD script content, injected verbatim
+	OGType       string
+	JSONLD       string
 }
 
 type SkillCategory struct {
@@ -40,6 +41,7 @@ type GitHubProject struct {
 	Description string   `yaml:"description"`
 	Stars       int      `yaml:"stars"`
 	Tags        []string `yaml:"tags"`
+	Kind        string   `yaml:"kind"`
 }
 
 type Post struct {
@@ -48,10 +50,18 @@ type Post struct {
 	Slug     string
 	FilePath string
 	URL      string
+	Tag      string
+	ReadTime string
 }
 
 type JobRole struct {
 	Title       string `yaml:"title"`
 	Date        string `yaml:"date"`
 	Description string `yaml:"description"`
+}
+
+type PostMeta struct {
+	Slug     string `yaml:"slug"`
+	Tag      string `yaml:"tag"`
+	ReadTime string `yaml:"read_time"`
 }
