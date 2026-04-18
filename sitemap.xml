@@ -11,44 +11,54 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://zeljkobenovic.com/blog/2026/04/16/easy-mikrotik-backup/</loc>
-    <lastmod>2026-04-16</lastmod>
+    <loc>https://zeljkobenovic.com/projects/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://zeljkobenovic.com/about/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://zeljkobenovic.com/blog/2026/04/18/easy-mikrotik-backup/</loc>
+    <lastmod>2026-04-18</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://zeljkobenovic.com/blog/2026/04/16/ec2-fleet-commands-without-ssh/</loc>
-    <lastmod>2026-04-16</lastmod>
+    <loc>https://zeljkobenovic.com/blog/2026/04/18/ec2-fleet-commands-without-ssh/</loc>
+    <lastmod>2026-04-18</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://zeljkobenovic.com/blog/2026/04/16/evm-chain-performance-testing-with-tpser/</loc>
-    <lastmod>2026-04-16</lastmod>
+    <loc>https://zeljkobenovic.com/blog/2026/04/18/evm-chain-performance-testing-with-tpser/</loc>
+    <lastmod>2026-04-18</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://zeljkobenovic.com/blog/2026/04/16/kubernetes-pvc-snapshot-management-with-kmon/</loc>
-    <lastmod>2026-04-16</lastmod>
+    <loc>https://zeljkobenovic.com/blog/2026/04/18/kubernetes-pvc-snapshot-management-with-kmon/</loc>
+    <lastmod>2026-04-18</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://zeljkobenovic.com/blog/2026/04/16/teams-direct-routing-without-sbc-hardware/</loc>
-    <lastmod>2026-04-16</lastmod>
+    <loc>https://zeljkobenovic.com/blog/2026/04/18/teams-direct-routing-without-sbc-hardware/</loc>
+    <lastmod>2026-04-18</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://zeljkobenovic.com/blog/2026/04/16/veeam-backup-grafana-dashboard/</loc>
-    <lastmod>2026-04-16</lastmod>
+    <loc>https://zeljkobenovic.com/blog/2026/04/18/veeam-backup-grafana-dashboard/</loc>
+    <lastmod>2026-04-18</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://zeljkobenovic.com/blog/2026/04/16/vmware-vcenter-vm-inventory-export-to-excel/</loc>
-    <lastmod>2026-04-16</lastmod>
+    <loc>https://zeljkobenovic.com/blog/2026/04/18/vmware-vcenter-vm-inventory-export-to-excel/</loc>
+    <lastmod>2026-04-18</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
